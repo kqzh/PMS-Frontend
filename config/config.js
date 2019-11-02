@@ -111,7 +111,7 @@ export default {
               authority: ['admin'],
             },
             {
-              name: '人员管理',
+              name: '学生管理',
               icon: 'smile',
               path: '/userlist',
               component: './UserList',

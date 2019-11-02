@@ -5,32 +5,22 @@ let tableListDataSource = [];
 for (let i = 0; i < 8; i += 1) {
   tableListDataSource.push({
     key: i,
-    disabled: i % 6 === 0,
-    href: 'https://ant.design',
-    avatar: [
-      'https://gw.alipayobjects.com/zos/rmsportal/eeHMaZBwmTvLdIwMfBpg.png',
-      'https://gw.alipayobjects.com/zos/rmsportal/udxAbMEhpwthVVcjLXik.png',
-    ][i % 2],
-    name: `TradeCode ${i}`,
+    student_id: `201721221200${i}`,
     title: `一个任务名称 ${i}`,
-    owner: '曲丽丽',
-    desc: '这是一段描述',
-    callNo: Math.floor(Math.random() * 1000),
-    status: Math.floor(Math.random() * 10) % 4,
+    student_name: '刘鑫超',
+    student_class: '计算机174',
+    student_status: Math.floor(Math.random() * 10) % 4,
     updatedAt: new Date(`2017-07-${Math.floor(i / 2) + 1}`),
     createdAt: new Date(`2017-07-${Math.floor(i / 2) + 1}`),
-    progress: Math.ceil(Math.random() * 100),
   });
 }
 
 function getRule(req, res, u) {
   let url = u;
-
   if (!url || Object.prototype.toString.call(url) !== '[object String]') {
     // eslint-disable-next-line prefer-destructuring
     url = req.url;
   }
-
   const params = parse(url, true).query;
   let dataSource = tableListDataSource;
 
@@ -45,13 +35,13 @@ function getRule(req, res, u) {
     });
   }
 
-  if (params.status) {
-    const status = params.status.split(',');
+  if (params.student_status) {
+    const status = params.student_status.split(',');
     let filterDataSource = [];
     status.forEach(s => {
       filterDataSource = filterDataSource.concat(
         dataSource.filter(item => {
-          if (parseInt(`${item.status}`, 10) === parseInt(s.split('')[0], 10)) {
+          if (parseInt(`${item.student_status}`, 10) === parseInt(s.split('')[0], 10)) {
             return true;
           }
 
@@ -62,8 +52,12 @@ function getRule(req, res, u) {
     dataSource = filterDataSource;
   }
 
-  if (params.name) {
-    dataSource = dataSource.filter(data => data.name.indexOf(params.name) > -1);
+  if (params.student_id) {
+    dataSource = dataSource.filter(data => data.student_id.indexOf(params.student_id) > -1);
+  }
+
+  if (params.student_class) {
+    dataSource = dataSource.filter(data => data.student_class.indexOf(params.student_class) > -1);
   }
 
   let pageSize = 10;
@@ -92,8 +86,7 @@ function postRule(req, res, u, b) {
   }
 
   const body = (b && b.body) || req.body;
-  const { method, name, desc, key } = body;
-
+  const { method, student_id, student_name,student_class, key } = body;
   switch (method) {
     /* eslint no-case-declarations:0 */
     case 'delete':
@@ -104,27 +97,19 @@ function postRule(req, res, u, b) {
       const i = Math.ceil(Math.random() * 10000);
       tableListDataSource.unshift({
         key: i,
-        href: 'https://ant.design',
-        avatar: [
-          'https://gw.alipayobjects.com/zos/rmsportal/eeHMaZBwmTvLdIwMfBpg.png',
-          'https://gw.alipayobjects.com/zos/rmsportal/udxAbMEhpwthVVcjLXik.png',
-        ][i % 2],
-        name: `TradeCode ${i}`,
-        title: `一个任务名称 ${i}`,
-        owner: '曲丽丽',
-        desc,
-        callNo: Math.floor(Math.random() * 1000),
-        status: Math.floor(Math.random() * 10) % 2,
+        student_name,
+        student_id,
+        student_class,
+        student_status: Math.floor(Math.random() * 10) % 2,
         updatedAt: new Date(),
         createdAt: new Date(),
-        progress: Math.ceil(Math.random() * 100),
       });
       break;
 
     case 'update':
       tableListDataSource = tableListDataSource.map(item => {
         if (item.key === key) {
-          return { ...item, desc, name };
+          return { ...item, student_id, student_name,student_class };
         }
 
         return item;
