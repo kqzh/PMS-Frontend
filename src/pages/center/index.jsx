@@ -86,8 +86,10 @@ class Center extends PureComponent {
 
   componentDidMount() {
     const { dispatch } = this.props;
+
     dispatch({
       type: 'center/fetchCurrent',
+
     });
     dispatch({
       type: 'center/fetch',
@@ -141,15 +143,15 @@ class Center extends PureComponent {
   };
   renderChildrenByTabKey = tabKey => {
     if (tabKey === 'projects') {
-      return <Projects />;
+      return <Projects status={0}/>;
     }
 
     if (tabKey === 'applications') {
-      return <Applications />;
+      return <Projects status={1}/>;
     }
 
     if (tabKey === 'articles') {
-      return <Articles />;
+      return <Projects status={2}/>;
     }
 
     return null;

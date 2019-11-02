@@ -85,7 +85,7 @@ export default {
           name: 'login',
           path: '/user/login',
           component: './user/login',
-        },
+        }
       ],
     },
     {
@@ -99,19 +99,22 @@ export default {
           routes: [
             {
               path: '/',
-              redirect: '/welcome',
+              redirect: '/center',
             },
+
+
             {
-              path: '/welcome',
-              name: 'welcome',
+              name: '项目列表',
               icon: 'smile',
-              component: './Welcome',
+              path: '/projectlist',
+              component: './ProjectList',
+              authority: ['admin'],
             },
             {
-              path: '/admin',
-              name: 'admin',
-              icon: 'crown',
-              component: './Admin',
+              name: '人员管理',
+              icon: 'smile',
+              path: '/userlist',
+              component: './UserList',
               authority: ['admin'],
             },
             {
