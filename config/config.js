@@ -85,7 +85,7 @@ export default {
           name: 'login',
           path: '/user/login',
           component: './user/login',
-        }
+        },
       ],
     },
     {
@@ -101,8 +101,6 @@ export default {
               path: '/',
               redirect: '/center',
             },
-
-
             {
               name: '项目列表',
               icon: 'smile',

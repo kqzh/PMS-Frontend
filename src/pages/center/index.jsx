@@ -93,6 +93,7 @@ class Center extends PureComponent {
     });
     dispatch({
       type: 'center/fetch',
+      count:2,
     });
   }
 
@@ -176,55 +177,20 @@ class Center extends PureComponent {
                 <div>
                   <div className={styles.avatarHolder}>
                     <img alt="" src={currentUser.avatar} />
-                    <div className={styles.name}>{currentUser.name}</div>
+                    <div className={styles.name}>{currentUser.student_name}</div>
+                    <br/>
                     <div>{currentUser.signature}</div>
                   </div>
                   <div className={styles.detail}>
                     <p>
-                      <i className={styles.title} />
-                      {currentUser.title}
+                      {/*<i className={styles.title} />*/}
+                      学号： {currentUser.student_id}
                     </p>
                     <p>
-                      <i className={styles.group} />
-                      {currentUser.group}
+                      {/*<i className={styles.group} />*/}
+                     班级： {currentUser.student_class}
                     </p>
-                    <p>
-                      <i className={styles.address} />
-                      {currentUser.geographic.province.label}
-                      {currentUser.geographic.city.label}
-                    </p>
-                  </div>
-                  <Divider dashed />
-                  <div className={styles.tags}>
-                    <div className={styles.tagsTitle}>标签</div>
-                    {currentUser.tags.concat(newTags).map(item => (
-                      <Tag key={item.key}>{item.label}</Tag>
-                    ))}
-                    {inputVisible && (
-                      <Input
-                        ref={ref => this.saveInputRef(ref)}
-                        type="text"
-                        size="small"
-                        style={{
-                          width: 78,
-                        }}
-                        value={inputValue}
-                        onChange={this.handleInputChange}
-                        onBlur={this.handleInputConfirm}
-                        onPressEnter={this.handleInputConfirm}
-                      />
-                    )}
-                    {!inputVisible && (
-                      <Tag
-                        onClick={this.showInput}
-                        style={{
-                          background: '#fff',
-                          borderStyle: 'dashed',
-                        }}
-                      >
-                        <Icon type="plus" />
-                      </Tag>
-                    )}
+
                   </div>
                   <Divider
                     style={{

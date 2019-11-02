@@ -49,27 +49,15 @@ function fakeList(count) {
 
   for (let i = 0; i < count; i += 1) {
     list.push({
-      id: `fake-list-${i}`,
-      owner: user[i % 10],
       title: titles[i % 8],
       avatar: avatars[i % 8],
       cover: parseInt(`${i / 4}`, 10) % 2 === 0 ? covers[i % 4] : covers[3 - (i % 4)],
-      status: ['active', 'exception', 'normal'][i % 3],
-      percent: Math.ceil(Math.random() * 50) + 50,
       logo: avatars[i % 8],
-      href: 'https://ant.design',
       updatedAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 2 * i).getTime(),
       createdAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 2 * i).getTime(),
       subDescription: desc[i % 5],
-      description:
-        '在中台产品的研发过程中，会出现不同的设计规范和实现方式，但其中往往存在很多类似的页面和组件，这些类似的组件会被抽离成一套标准规范。',
-      activeUser: Math.ceil(Math.random() * 100000) + 100000,
-      newUser: Math.ceil(Math.random() * 1000) + 1000,
-      star: Math.ceil(Math.random() * 100) + 100,
-      like: Math.ceil(Math.random() * 100) + 100,
-      message: Math.ceil(Math.random() * 10) + 10,
       content:
-        '段落示意：蚂蚁金服设计平台 ant.design，用最小的工作量，无缝接入蚂蚁金服生态，提供跨越设计与开发的体验解决方案。蚂蚁金服设计平台 ant.design，用最小的工作量，无缝接入蚂蚁金服生态，提供跨越设计与开发的体验解决方案。',
+        '段落示意：蚂蚁金服设计平台 ant.design，用最小的工作量，无缝接入蚂蚁金服生态，提供跨越设计与开发的体验解决方案。',
       members: [
         {
           avatar: 'https://gw.alipayobjects.com/zos/rmsportal/ZiESqWwCXBRQoaPONSJe.png',
@@ -104,39 +92,13 @@ export default {
   'GET  /api/fake_list': getFakeList,
   // 支持值为 Object 和 Array
   'GET  /api/currentUsers': {
-    name: 'kqzh',
+    student_name: '刘鑫超',
+    student_id: '2017212212098',
+    student_class: '计算机174',
+    signature:'生活就像一块巧克力',
     avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
     userid: '00000001',
-    email: 'antdesign@alipay.com',
-    signature: '海纳百川，有容乃大',
-    title: '交互专家',
-    group: '蚂蚁金服－某某某事业群－某某平台部－某某技术部－UED',
-    tags: [
-      {
-        key: '0',
-        label: '很有想法的',
-      },
-      {
-        key: '1',
-        label: '专注设计',
-      },
-      {
-        key: '2',
-        label: '辣~',
-      },
-      {
-        key: '3',
-        label: '大长腿',
-      },
-      {
-        key: '4',
-        label: '川妹子',
-      },
-      {
-        key: '5',
-        label: '海纳百川',
-      },
-    ],
+
     notice: [
       {
         id: 'xxx1',
@@ -205,20 +167,6 @@ export default {
         status:2
       },
     ],
-    notifyCount: 12,
-    unreadCount: 11,
-    country: 'China',
-    geographic: {
-      province: {
-        label: '浙江省',
-        key: '330000',
-      },
-      city: {
-        label: '杭州市',
-        key: '330100',
-      },
-    },
-    address: '西湖区工专路 77 号',
-    phone: '0752-268888888',
+
   },
 };
