@@ -4,8 +4,10 @@ import Link from 'umi/link';
 import React from 'react';
 import { connect } from 'dva';
 import SelectLang from '@/components/SelectLang';
-import logo from '../assets/logo.svg';
+//import logo from '../assets/logo.svg';
+import logo from '../assets/remax.png';
 import styles from './UserLayout.less';
+import { Icon } from 'antd';
 
 const UserLayout = props => {
   const {
@@ -42,14 +44,37 @@ const UserLayout = props => {
             <div className={styles.header}>
               <Link to="/">
                 <img alt="logo" className={styles.logo} src={logo} />
-                <span className={styles.title}>Ant Design</span>
+                <span className={styles.title}>Pro Manage</span>
               </Link>
             </div>
-            <div className={styles.desc}>Ant Design 是西湖区最具影响力的 Web 设计规范</div>
+            <div className={styles.desc}>Pro Manage 是杭师大最好的课程项目申请平台.</div>
           </div>
           {children}
         </div>
-        <DefaultFooter />
+
+        <DefaultFooter
+          copyright="2019 刘鑫超"
+          links={[
+            {
+              key: 'Author Blog',
+              title: 'Author Blog',
+              href: 'https://liuxinc.ink',
+              blankTarget: true,
+            },
+            {
+              key: 'github',
+              title: <Icon type="github" />,
+              href: 'https://github.com/kqzh',
+              blankTarget: true,
+            },
+            {
+              key: 'Ant Design',
+              title: 'Ant Design',
+              href: 'https://ant.design',
+              blankTarget: true,
+            },
+          ]}
+        />
       </div>
     </>
   );

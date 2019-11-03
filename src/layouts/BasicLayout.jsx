@@ -11,8 +11,8 @@ import { Icon, Result, Button } from 'antd';
 import Authorized from '@/utils/Authorized';
 import RightContent from '@/components/GlobalHeader/RightContent';
 import { isAntDesignPro, getAuthorityFromRouter } from '@/utils/utils';
-import logo from '../assets/logo.svg';
-
+//import logo from '../assets/logo.svg';
+import logo from '../assets/remax.png';
 const noMatch = (
   <Result
     status="403"
@@ -37,18 +37,18 @@ const menuDataRender = menuList =>
 
 const defaultFooterDom = (
   <DefaultFooter
-    copyright="2019 蚂蚁金服体验技术部出品"
+    copyright="2019 刘鑫超"
     links={[
       {
-        key: 'Ant Design Pro',
-        title: 'Ant Design Pro',
-        href: 'https://pro.ant.design',
+        key: 'Author Blog',
+        title: 'Author Blog',
+        href: 'https://liuxinc.ink',
         blankTarget: true,
       },
       {
         key: 'github',
         title: <Icon type="github" />,
-        href: 'https://github.com/ant-design/ant-design-pro',
+        href: 'https://github.com/kqzh',
         blankTarget: true,
       },
       {
@@ -130,11 +130,18 @@ const BasicLayout = props => {
     <ProLayout
       logo={logo}
       onCollapse={handleMenuCollapse}
+      menuHeaderRender={(logo, title) => {
+        const newTitle = {...title,props:{...props,children:"Pro Manage"}};
+        return(
+          <div>
+            {logo}
+            {newTitle}
+          </div>)
+        }}
       menuItemRender={(menuItemProps, defaultDom) => {
         if (menuItemProps.isUrl) {
           return defaultDom;
         }
-
         return <Link to={menuItemProps.path}>{defaultDom}</Link>;
       }}
       breadcrumbRender={(routers = []) => [

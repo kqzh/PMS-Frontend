@@ -11,8 +11,8 @@ function getCity(req, res) {
 function updateUser(req,res,u,b) {
   const body = (b && b.body) || req.body;
 
-  //return res.json(body)
-  return ""
+  return res.json(body)
+  //return ""
 }
 export default {
 

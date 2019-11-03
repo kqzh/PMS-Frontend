@@ -20,10 +20,8 @@ const Model = {
         const urlParams = new URL(window.location.href);
         const params = getPageQuery();
         let { redirect } = params;
-
         if (redirect) {
           const redirectUrlParams = new URL(redirect);
-
           if (redirectUrlParams.origin === urlParams.origin) {
             redirect = redirect.substr(urlParams.origin.length);
 
@@ -31,12 +29,19 @@ const Model = {
               redirect = redirect.substr(redirect.indexOf('#') + 1);
             }
           } else {
+
             window.location.href = '/';
             return;
           }
         }
-
-        yield put(routerRedux.replace(redirect || '/'));
+        /*
+        不同权限跳转到不同的路由
+         */
+        console.log(response);
+        if(response.currentAuthority==="admin")
+          yield put(routerRedux.replace('/projectlist'));
+        else
+          yield put(routerRedux.replace('/'));
       }
     },
 

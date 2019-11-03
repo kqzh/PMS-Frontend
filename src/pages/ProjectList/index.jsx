@@ -101,7 +101,7 @@ class ListCardList extends Component {
               return (
                 <List.Item>
                   <Link to='/projectlist/form'><Button type="dashed" className={styles.newButton}>
-                    <Icon type="plus" /> 新增产品
+                    <Icon type="plus" /> 新增项目
                   </Button></Link>
                 </List.Item>
               );

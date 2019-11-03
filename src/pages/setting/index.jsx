@@ -112,8 +112,7 @@ class Setting extends Component {
 
   render() {
     const { currentUser } = this.props;
-
-    if (!currentUser.userid) {
+    if (!currentUser.name) {
       return '';
     }
 
