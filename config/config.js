@@ -106,7 +106,7 @@ export default {
               icon: 'smile',
               path: '/projectlist',
               component: './ProjectList',
-              authority: ['admin'],
+              authority: ['admin'], //hideInMenu: true,
             },
             {
               name: '学生管理',
@@ -126,6 +126,14 @@ export default {
               icon: 'smile',
               path: '/setting',
               component: './setting',
+            },
+            {
+              name: '基础表单',
+              icon: 'smile',
+              path: '/projectlist/form',
+              component: './ProjectForm',
+              authority: ['admin'],
+              hideInMenu: true,
             },
             {
               component: './404',

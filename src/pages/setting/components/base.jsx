@@ -129,70 +129,17 @@ class BaseView extends Component {
                 ],
               })(<Input />)}
             </FormItem>
-            <FormItem label="个人简介">
+            <FormItem label="个性签名">
               {getFieldDecorator('profile', {
                 rules: [
                   {
-                    required: true,
-                    message: '请输入个人简介!',
+                    //required: true,
+                    //message: '请输入个签名!',
                   },
                 ],
-              })(<Input.TextArea placeholder="个人简介" rows={4} />)}
+              })(<Input.TextArea placeholder="个性签名" rows={4} />)}
             </FormItem>
-            <FormItem label="国家/地区">
-              {getFieldDecorator('country', {
-                rules: [
-                  {
-                    required: true,
-                    message: '请输入您的国家或地区!',
-                  },
-                ],
-              })(
-                <Select
-                  style={{
-                    maxWidth: 220,
-                  }}
-                >
-                  <Option value="China">中国</Option>
-                </Select>,
-              )}
-            </FormItem>
-            <FormItem label="所在省市">
-              {getFieldDecorator('geographic', {
-                rules: [
-                  {
-                    required: true,
-                    message: '请输入您的所在省市!',
-                  },
-                  {
-                    validator: validatorGeographic,
-                  },
-                ],
-              })(<GeographicView />)}
-            </FormItem>
-            <FormItem label="街道地址">
-              {getFieldDecorator('address', {
-                rules: [
-                  {
-                    required: true,
-                    message: '请输入您的街道地址!',
-                  },
-                ],
-              })(<Input />)}
-            </FormItem>
-            <FormItem label="联系电话">
-              {getFieldDecorator('phone', {
-                rules: [
-                  {
-                    required: true,
-                    message: '请输入您的联系电话!',
-                  },
-                  {
-                    validator: validatorPhone,
-                  },
-                ],
-              })(<PhoneView />)}
-            </FormItem>
+
             <Button type="primary" onClick={this.handlerSubmit}>
               更新基本信息
             </Button>

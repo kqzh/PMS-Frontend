@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import { connect } from 'dva';
 import styles from './style.less';
+import { Link } from 'react-router-dom';
 const { Paragraph } = Typography;
 
 @connect(({ listCardList, loading }) => ({
@@ -99,9 +100,9 @@ class ListCardList extends Component {
 
               return (
                 <List.Item>
-                  <Button type="dashed" className={styles.newButton}>
+                  <Link to='/projectlist/form'><Button type="dashed" className={styles.newButton}>
                     <Icon type="plus" /> 新增产品
-                  </Button>
+                  </Button></Link>
                 </List.Item>
               );
             }}

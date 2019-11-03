@@ -322,7 +322,9 @@ class TableList extends Component {
     const { selectedRows, modalVisible, updateModalVisible, stepFormValues } = this.state;
     const menu = (
       <Menu onClick={this.handleMenuClick} selectedKeys={[]}>
+        <Menu.Item key="">添加项目</Menu.Item>
         <Menu.Item key="remove">删除</Menu.Item>
+
       </Menu>
     );
     const parentMethods = {
