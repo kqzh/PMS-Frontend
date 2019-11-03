@@ -1,4 +1,4 @@
-import { queryCity, queryCurrent, queryProvince, query as queryUsers } from './service';
+import { queryCity, queryCurrent, queryProvince, query as queryUsers, updateUser } from './service';
 
 const Model = {
   namespace: 'setting',
@@ -24,6 +24,14 @@ const Model = {
         payload: response,
       });
     },
+    *update({ payload, callback }, { call, put }) {
+      const response = yield call(updateUser, payload);
+      yield put({
+        type: 'saveCurrentUser',
+        payload: response,
+      });
+      if (callback) callback();
+    },
 
     *fetchProvince(_, { call, put }) {
       yield put({
@@ -47,6 +55,7 @@ const Model = {
   },
   reducers: {
     saveCurrentUser(state, action) {
+
       return { ...state, currentUser: action.payload || {} };
     },
 

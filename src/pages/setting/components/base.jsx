@@ -64,6 +64,7 @@ class BaseView extends Component {
     const { currentUser, form } = this.props;
 
     if (currentUser) {
+
       Object.keys(form.getFieldsValue()).forEach(key => {
         const obj = {};
         obj[key] = currentUser[key] || null;
@@ -90,13 +91,23 @@ class BaseView extends Component {
   getViewDom = ref => {
     this.view = ref;
   };
+  handleUpdate = fields => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'setting/update',
+      payload: {
+        ...fields,
+      },
+    });
+    message.success('更新基本信息成功');
+  };
 
   handlerSubmit = event => {
     event.preventDefault();
     const { form } = this.props;
-    form.validateFields(err => {
+    form.validateFields((err,fieldsValue) => {
       if (!err) {
-        message.success('更新基本信息成功');
+        this.handleUpdate(fieldsValue);
       }
     });
   };
@@ -130,7 +141,7 @@ class BaseView extends Component {
               })(<Input />)}
             </FormItem>
             <FormItem label="个性签名">
-              {getFieldDecorator('profile', {
+              {getFieldDecorator('signature', {
                 rules: [
                   {
                     //required: true,

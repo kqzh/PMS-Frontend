@@ -199,7 +199,7 @@ class Center extends PureComponent {
                     dashed
                   />
                   <div className={styles.team}>
-                    <div className={styles.teamTitle}>团队</div>
+                    <div className={styles.teamTitle}>课程</div>
                     <Row gutter={36}>
                       {currentUser.notice &&
                         currentUser.notice.map(item => (
