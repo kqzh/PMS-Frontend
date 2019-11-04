@@ -8,19 +8,6 @@ import styles from './BaseView.less';
 const FormItem = Form.Item;
 const { Option } = Select; // 头像组件 方便以后独立，增加裁剪之类的功能
 
-const AvatarView = ({ avatar }) => (
-  <Fragment>
-    <div className={styles.avatar_title}>头像</div>
-    <div className={styles.avatar}>
-      <img src={avatar} alt="avatar" />
-    </div>
-    <Upload fileList={[]}>
-      <div className={styles.button_view}>
-        <Button icon="upload">更换头像</Button>
-      </div>
-    </Upload>
-  </Fragment>
-);
 
 const validatorGeographic = (_, value, callback) => {
   const { province, city } = value;
@@ -55,7 +42,37 @@ const validatorPhone = (rule, value, callback) => {
 }))
 class BaseView extends Component {
   view = undefined;
+  state={
+    imgUrl :""
+  };
+  //更新头像
+  getBase64(img, callback) {
+    const reader = new FileReader();
+    reader.addEventListener('load', () => callback(reader.result));
+    reader.readAsDataURL(img);
+  }
 
+  handleUpload = info =>{
+      // Get this url from response in real world.
+      this.getBase64(info.file.originFileObj, imageUrl =>
+        this.setState({
+          imgUrl: imageUrl
+        })
+      );
+  };
+  AvatarView = ({ avatar }) => (
+    <Fragment>
+      <div className={styles.avatar_title}>头像</div>
+      <div className={styles.avatar}>
+        <img src={avatar} alt="avatar" />
+      </div>
+      <Upload fileList={[]} onChange={this.handleUpload}>
+        <div className={styles.button_view}>
+          <Button icon="upload">更换头像</Button>
+        </div>
+      </Upload>
+    </Fragment>
+  );
   componentDidMount() {
     this.setBaseInfo();
   }
@@ -157,7 +174,7 @@ class BaseView extends Component {
           </Form>
         </div>
         <div className={styles.right}>
-          <AvatarView avatar={this.getAvatarURL()} />
+          <this.AvatarView avatar={this.state.imgUrl||this.getAvatarURL()} />
         </div>
       </div>
     );
