@@ -120,6 +120,14 @@ export default {
               icon: 'smile',
               path: '/center',
               component: './center',
+              authority: ['user'],
+            },
+            {
+              name: '个人中心',
+              icon: 'smile',
+              path: '/userlist/user/id',
+              component: './center',
+              hideInMenu: true
             },
             {
               name: '个人设置',

@@ -23,6 +23,7 @@ import CreateForm from './components/CreateForm';
 import StandardTable from './components/StandardTable';
 import UpdateForm from './components/UpdateForm';
 import styles from './style.less';
+import { Link } from 'react-router-dom';
 const FormItem = Form.Item;
 const { Option } = Select;
 
@@ -102,9 +103,12 @@ class TableList extends Component {
       title: '操作',
       render: (text, record) => (
         <Fragment>
+          <Link  to={"/userlist/user/id"}>查看</Link>
+          <Divider type="vertical" />
           <a onClick={() => this.handleUpdateModalVisible(true, record)}>修改</a>
           <Divider type="vertical" />
           <a  onClick={()=> this.handleRemoveClick(record)}>删除</a>
+
         </Fragment>
       ),
     },

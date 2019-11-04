@@ -30,6 +30,7 @@ const noMatch = (
  */
 
 const menuDataRender = menuList =>
+
   menuList.map(item => {
     const localItem = { ...item, children: item.children ? menuDataRender(item.children) : [] };
     return Authorized.check(item.authority, localItem, null);
