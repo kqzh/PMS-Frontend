@@ -19,7 +19,7 @@ const GlobalHeaderRight = props => {
       <HeaderSearch
         className={`${styles.action} ${styles.search}`}
         placeholder="站内搜索"
-        defaultValue="umi ui"
+        // defaultValue="umi ui"
         dataSource={['搜索提示一', '搜索提示二', '搜索提示三']}
         onSearch={value => {
           console.log('input', value);

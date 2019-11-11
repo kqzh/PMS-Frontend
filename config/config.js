@@ -99,7 +99,7 @@ export default {
           routes: [
             {
               path: '/',
-              redirect: '/center',
+              redirect: '/user/login',
             },
             {
               name: '项目列表',
@@ -123,17 +123,11 @@ export default {
               authority: ['user'],
             },
             {
-              name: '个人中心',
-              icon: 'smile',
-              path: '/userlist/user/id',
-              component: './center',
-              hideInMenu: true
-            },
-            {
               name: '个人设置',
               icon: 'smile',
               path: '/setting',
               component: './setting',
+              authority: ['admin', 'user'],
             },
             {
               name: '基础表单',
@@ -142,6 +136,7 @@ export default {
               component: './ProjectForm',
               authority: ['admin'],
               hideInMenu: true,
+
             },
             {
               component: './404',
@@ -199,13 +194,13 @@ export default {
     basePath: '/',
   },
   chainWebpack: webpackPlugin,
-  /*
+//设置代理
   proxy: {
     '/server/api/': {
-      target: 'https://preview.pro.ant.design/',
+      target: 'http://localhost:8080/',
       changeOrigin: true,
       pathRewrite: { '^/server': '' },
     },
   },
-  */
+
 };
