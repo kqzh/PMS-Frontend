@@ -7,6 +7,7 @@ const Model = {
   namespace: 'login',
   state: {
     status: undefined,
+
   },
   effects: {
     *login({ payload }, { call, put }) {
@@ -37,7 +38,7 @@ const Model = {
         /*
         不同权限跳转到不同的路由
          */
-        console.log(response);
+
         if(response.currentAuthority==="admin")
           yield put(routerRedux.replace('/projectlist'));
         else
@@ -67,7 +68,7 @@ const Model = {
   reducers: {
     changeLoginStatus(state, { payload }) {
       setAuthority(payload.currentAuthority);
-      return { ...state, status: payload.status, type: payload.type };
+      return { ...state, status: payload.status, type: payload.type,username:payload.username };
     },
   },
 };
