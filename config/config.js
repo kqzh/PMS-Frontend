@@ -99,7 +99,13 @@ export default {
           routes: [
             {
               path: '/',
-              redirect: '/user/login',
+              redirect: '/welcome',
+            },
+            {
+              name: '空白页面',
+              icon: 'smile',
+              path: '/welcome',
+              component: './welcome',
             },
             {
               name: '项目列表',
@@ -136,8 +142,8 @@ export default {
               component: './ProjectForm',
               authority: ['admin'],
               hideInMenu: true,
-
             },
+
             {
               component: './404',
             },
@@ -194,13 +200,14 @@ export default {
     basePath: '/',
   },
   chainWebpack: webpackPlugin,
-//设置代理
+  //设置代理
   proxy: {
     '/server/api/': {
       target: 'http://localhost:8080/',
       changeOrigin: true,
-      pathRewrite: { '^/server': '' },
+      pathRewrite: {
+        '^/server': '',
+      },
     },
   },
-
 };

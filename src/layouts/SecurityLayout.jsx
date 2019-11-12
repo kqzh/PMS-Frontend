@@ -24,23 +24,19 @@ class SecurityLayout extends React.Component {
 
   render() {
     const { isReady } = this.state;
-    const { children, loading,loginName } = this.props; // You can replace it to your authentication rule (such as check token exists)
+    const { children, loading,loginName,currentUser } = this.props; // You can replace it to your authentication rule (such as check token exists)
     // 你可以把它替换成你自己的登录认证规则（比如判断 token 是否存在）
-
-    const isLogin = loginName!==undefined&&false;
-
+    const isLogin = loginName!==undefined;
     const queryString = stringify({
       redirect: window.location.href,
     });
-
     if ((!isLogin && loading) || !isReady) {
       return <PageLoading />;
     }
-
     if (!isLogin) {
-      return <Redirect to={`/user/login?${queryString}`}></Redirect>;
+      return <Redirect to={`/user/login`}></Redirect>;
+      // return <Redirect to={`/user/login?${queryString}`}></Redirect>;
     }
-
     return children;
   }
 }

@@ -56,9 +56,9 @@ const operationTabList = [
   },
 ];
 
-@connect(({ loading, center }) => ({
-  currentUser: center.currentUser,
-  currentUserLoading: loading.effects['center/fetchCurrent'],
+@connect(({ loading, user }) => ({
+  currentUser: user.currentUser,
+  currentUserLoading: loading.effects['user/fetchCurrent'],
 }))
 class Center extends PureComponent {
   // static getDerivedStateFromProps(
@@ -85,16 +85,18 @@ class Center extends PureComponent {
   input = undefined;
 
   componentDidMount() {
-    const { dispatch } = this.props;
-
-    dispatch({
-      type: 'center/fetchCurrent',
-
-    });
+    const { dispatch,currentUser } = this.props;
     dispatch({
       type: 'center/fetch',
-      count:2,
+      payload:{
+        username:currentUser.username
+      }
     });
+    // dispatch({
+    //   type: 'center/fetchCurrent',
+    //
+    // });
+
   }
 
   onTabChange = key => {
@@ -177,18 +179,18 @@ class Center extends PureComponent {
                 <div>
                   <div className={styles.avatarHolder}>
                     <img alt="" src={currentUser.avatar} />
-                    <div className={styles.name}>{currentUser.student_name}</div>
+                    <div className={styles.name}>{currentUser.name}</div>
                     <br/>
                     <div>{currentUser.signature}</div>
                   </div>
                   <div className={styles.detail}>
                     <p>
                       {/*<i className={styles.title} />*/}
-                      学号： {currentUser.student_id}
+                      学号： {currentUser.username}
                     </p>
                     <p>
                       {/*<i className={styles.group} />*/}
-                     班级： {currentUser.student_class}
+                     班级： {currentUser.className}
                     </p>
 
                   </div>

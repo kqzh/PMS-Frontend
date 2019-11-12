@@ -83,8 +83,10 @@ function fakeList(count) {
 
 function getFakeList(req, res) {
   const params = req.query;
+  console.log(params);
+  console.log(123);
   const count = params.count * 1 || 5;
-  const result = fakeList(count);
+  const result = fakeList(4);
   return res.json(result);
 }
 

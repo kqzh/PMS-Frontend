@@ -16,7 +16,9 @@ const Model = {
     },
 
     *fetch({ payload }, { call, put }) {
+      console.log(payload);
       const response = yield call(queryFakeList, payload);
+
       yield put({
         type: 'queryList',
         payload: Array.isArray(response) ? response : [],

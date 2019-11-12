@@ -38,11 +38,9 @@ const Model = {
         /*
         不同权限跳转到不同的路由
          */
+        console.log(response.currentAuthority);
 
-        if(response.currentAuthority==="admin")
-          yield put(routerRedux.replace('/projectlist'));
-        else
-          yield put(routerRedux.replace('/'));
+          yield put(routerRedux.replace('/welcome'));
       }
     },
 
