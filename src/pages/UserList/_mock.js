@@ -17,10 +17,12 @@ for (let i = 0; i < 8; i += 1) {
 
 function getRule(req, res, u) {
   let url = u;
+
   if (!url || Object.prototype.toString.call(url) !== '[object String]') {
     // eslint-disable-next-line prefer-destructuring
     url = req.url;
   }
+  console.log(url);
   const params = parse(url, true).query;
   let dataSource = tableListDataSource;
 

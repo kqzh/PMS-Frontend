@@ -28,10 +28,12 @@ const Model = {
 
     *remove({ payload, callback }, { call, put }) {
       const response = yield call(removeRule, payload);
+
       yield put({
         type: 'save',
         payload: response,
       });
+      //tableListDataSource = tableListDataSource.filter(item => key.indexOf(item.key) === -1);
       if (callback) callback();
     },
 

@@ -105,7 +105,7 @@ class TableList extends Component {
         <Fragment>
           <Link  to={"/userlist/user/id"}>查看</Link>
           <Divider type="vertical" />
-          <a onClick={() => this.handleUpdateModalVisible(true, record)}>修改</a>
+            <a onClick={() => this.handleUpdateModalVisible(true, record)}>修改</a>
           <Divider type="vertical" />
           <a  onClick={()=> this.handleRemoveClick(record)}>删除</a>
 
@@ -115,7 +115,7 @@ class TableList extends Component {
   ];
 
   componentDidMount() {
-    const { dispatch } = this.props;
+    const { dispatch,listTableList } = this.props;
     dispatch({
       type: 'listTableList/fetch',
     });
@@ -123,6 +123,7 @@ class TableList extends Component {
 
   handleRemoveClick = (record) =>{
     const { dispatch } = this.props;
+
     dispatch({
       type: 'listTableList/remove',
       payload: {

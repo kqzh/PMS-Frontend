@@ -33,7 +33,9 @@ class StandardTable extends Component {
   constructor(props) {
     super(props);
     const { columns } = props;
+
     const needTotalList = initTotalList(columns);
+
     this.state = {
       selectedRowKeys: [],
       needTotalList,
