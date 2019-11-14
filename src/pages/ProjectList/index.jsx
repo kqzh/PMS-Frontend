@@ -15,12 +15,24 @@ class ListCardList extends Component {
     const { dispatch } = this.props;
     dispatch({
       type: 'listCardList/fetch',
-      payload: {
-        count: 8,
-      },
+      // payload: {
+      //   count: 8,
+      // },
     });
   }
-
+  handleUpdate = (key)=>{
+    const {listCardList} = this.props;
+    this.props.history.push("/projectlist/form?method=update&id="+key);
+  };
+  handleDelete = (key)=>{
+    const {dispatch } = this.props;
+    dispatch({
+      type: 'listCardList/remove',
+      payload: {
+           key,
+      },
+    })
+  };
   render() {
     const {
       listCardList: { list },
@@ -77,7 +89,8 @@ class ListCardList extends Component {
                     <Card
                       hoverable
                       className={styles.card}
-                      actions={[<a key="option1">编辑</a>, <a key="option2">删除</a>]}
+                      actions={[<a key="option1" onClick={()=>this.handleUpdate(item.id)} >编辑</a>,
+                        <a key="option2" onClick={()=>this.handleDelete(item.id)}>删除</a>]}
                     >
                       <Card.Meta
                         avatar={<img alt="" className={styles.cardAvatar} src={item.avatar} />}
@@ -100,7 +113,7 @@ class ListCardList extends Component {
 
               return (
                 <List.Item>
-                  <Link to='/projectlist/form'><Button type="dashed" className={styles.newButton}>
+                  <Link to='/projectlist/form?method=add'><Button type="dashed" className={styles.newButton}>
                     <Icon type="plus" /> 新增项目
                   </Button></Link>
                 </List.Item>

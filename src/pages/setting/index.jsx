@@ -10,8 +10,8 @@ import styles from './style.less';
 
 const { Item } = Menu;
 
-@connect(({ setting }) => ({
-  currentUser: setting.currentUser,
+@connect(({ user }) => ({
+  currentUser: user.currentUser,
 }))
 class Setting extends Component {
   main = undefined;
@@ -33,9 +33,9 @@ class Setting extends Component {
 
   componentDidMount() {
     const { dispatch } = this.props;
-    dispatch({
-      type: 'setting/fetchCurrent',
-    });
+    // dispatch({
+    //   type: 'setting/fetchCurrent',
+    // });
     window.addEventListener('resize', this.resize);
     this.resize();
   }
@@ -112,7 +112,7 @@ class Setting extends Component {
 
   render() {
     const { currentUser } = this.props;
-    if (!currentUser.name) {
+    if (!currentUser.nickname) {
       return '';
     }
 

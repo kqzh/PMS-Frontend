@@ -38,7 +38,6 @@ const Model = {
         /*
         不同权限跳转到不同的路由
          */
-        console.log(response.currentAuthority);
 
           yield put(routerRedux.replace('/welcome'));
       }
@@ -66,7 +65,7 @@ const Model = {
   reducers: {
     changeLoginStatus(state, { payload }) {
       setAuthority(payload.currentAuthority);
-      return { ...state, status: payload.status, type: payload.type,username:payload.username };
+      return { ...state, status: payload.status, type: payload.type,username:payload.username,currentAuthority:payload.currentAuthority };
     },
   },
 };

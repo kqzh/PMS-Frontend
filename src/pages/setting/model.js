@@ -25,6 +25,7 @@ const Model = {
       });
     },
     *update({ payload, callback }, { call, put }) {
+      console.log(payload);
       const response = yield call(updateUser, payload);
       yield put({
         type: 'saveCurrentUser',

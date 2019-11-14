@@ -15,24 +15,70 @@ import React, { Component } from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import { connect } from 'dva';
 import styles from './style.less';
+import moment from 'moment';
+
+
+
 const FormItem = Form.Item;
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
 
+@connect(({ loading, listCardList }) => ({
+  projectList: listCardList.list,
+  loading: loading.models.listCardList,
+}))
 class ProjectForm extends Component {
   handleSubmit = e => {
-    const { dispatch, form } = this.props;
+    const { dispatch, form ,location} = this.props;
+    const params = location.query;
     e.preventDefault();
     form.validateFieldsAndScroll((err, values) => {
+      const pid = parseInt(params.id);
+      const tmp = {...values,startTime:values.date[0],endTime:values.date[1],id:pid};
+
+      //console.log(tmp);
       if (!err) {
-        dispatch({
-          type: 'projectForm/submitRegularForm',
-          payload: values,
-        });
+
+        if(params.method==="update"){
+          dispatch({
+            type: 'projectForm/updateRegularForm',
+            payload: tmp,
+          });
+        }else{
+          dispatch({
+            type: 'projectForm/submitRegularForm',
+            payload: tmp,
+          });
+        }
+        setTimeout(() => {
+          this.props.history.push('/projectlist')
+        }, 1000);
+
       }
     });
   };
+  state={
+    list:{}
+  };
+  componentDidMount() {
+    const {dispatch,location,projectList} = this.props;
+    const params =location.query;
+
+    if(params.method==="update"){
+      for(let i=0;i<projectList.length;i++){
+        if(projectList[i].id===parseInt(params.id)){
+          this.setState({
+            list:projectList[i]
+          });
+          break
+        }
+      }
+    }
+    //setTimeout(()=>console.log(this.state.list),1000);
+
+
+  }
 
   render() {
     const { submitting } = this.props;
@@ -72,6 +118,9 @@ class ProjectForm extends Component {
         },
       },
     };
+    const {list} = this.state;
+    const startDate= moment(list.StartTime);
+    const  endDate= moment(list.EndTime);
     return (
       <PageHeaderWrapper content={<FormattedMessage id="projectform.basic.description" />}>
         <Card bordered={false}>
@@ -92,6 +141,7 @@ class ProjectForm extends Component {
                     }),
                   },
                 ],
+                initialValue:list.title
               })(
                 <Input
                   placeholder={formatMessage({
@@ -110,6 +160,7 @@ class ProjectForm extends Component {
                     }),
                   },
                 ],
+                initialValue: [startDate, endDate]
               })(
                 <RangePicker
                   style={{
@@ -123,11 +174,12 @@ class ProjectForm extends Component {
                       id: 'projectform.placeholder.end',
                     }),
                   ]}
+
                 />,
               )}
             </FormItem>
             <FormItem {...formItemLayout} label={<FormattedMessage id="projectform.goal.label" />}>
-              {getFieldDecorator('goal', {
+              {getFieldDecorator('description', {
                 rules: [
                   {
                     required: true,
@@ -136,6 +188,7 @@ class ProjectForm extends Component {
                     }),
                   },
                 ],
+                initialValue:list.description
               })(
                 <TextArea
                   style={{
@@ -161,6 +214,7 @@ class ProjectForm extends Component {
                     }),
                   },
                 ],
+                initialValue:list.Standard
               })(
                 <TextArea
                   style={{
@@ -173,125 +227,125 @@ class ProjectForm extends Component {
                 />,
               )}
             </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label={
-                <span>
-                  <FormattedMessage id="projectform.client.label" />
-                  <em className={styles.optional}>
-                    <FormattedMessage id="projectform.form.optional" />
-                    <Tooltip title={<FormattedMessage id="projectform.label.tooltip" />}>
-                      <Icon
-                        type="info-circle-o"
-                        style={{
-                          marginRight: 4,
-                        }}
-                      />
-                    </Tooltip>
-                  </em>
-                </span>
-              }
-            >
-              {getFieldDecorator('client')(
-                <Input
-                  placeholder={formatMessage({
-                    id: 'projectform.client.placeholder',
-                  })}
-                />,
-              )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label={
-                <span>
-                  <FormattedMessage id="projectform.invites.label" />
-                  <em className={styles.optional}>
-                    <FormattedMessage id="projectform.form.optional" />
-                  </em>
-                </span>
-              }
-            >
-              {getFieldDecorator('invites')(
-                <Input
-                  placeholder={formatMessage({
-                    id: 'projectform.invites.placeholder',
-                  })}
-                />,
-              )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label={
-                <span>
-                  <FormattedMessage id="projectform.weight.label" />
-                  <em className={styles.optional}>
-                    <FormattedMessage id="projectform.form.optional" />
-                  </em>
-                </span>
-              }
-            >
-              {getFieldDecorator('weight')(
-                <InputNumber
-                  placeholder={formatMessage({
-                    id: 'projectform.weight.placeholder',
-                  })}
-                  min={0}
-                  max={100}
-                />,
-              )}
-              <span className="ant-form-text">%</span>
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label={<FormattedMessage id="projectform.public.label" />}
-              help={<FormattedMessage id="projectform.label.help" />}
-            >
-              <div>
-                {getFieldDecorator('public', {
-                  initialValue: '1',
-                })(
-                  <Radio.Group>
-                    <Radio value="1">
-                      <FormattedMessage id="projectform.radio.public" />
-                    </Radio>
-                    <Radio value="2">
-                      <FormattedMessage id="projectform.radio.partially-public" />
-                    </Radio>
-                    <Radio value="3">
-                      <FormattedMessage id="projectform.radio.private" />
-                    </Radio>
-                  </Radio.Group>,
-                )}
-                <FormItem
-                  style={{
-                    marginBottom: 0,
-                  }}
-                >
-                  {getFieldDecorator('publicUsers')(
-                    <Select
-                      mode="multiple"
-                      placeholder={formatMessage({
-                        id: 'projectform.publicUsers.placeholder',
-                      })}
-                      style={{
-                        margin: '8px 0',
-                        display: getFieldValue('public') === '2' ? 'block' : 'none',
-                      }}
-                    >
-                      <Option value="1">
-                        <FormattedMessage id="projectform.option.A" />
-                      </Option>
-                      <Option value="2">
-                        <FormattedMessage id="projectform.option.B" />
-                      </Option>
-                      <Option value="3">
-                        <FormattedMessage id="projectform.option.C" />
-                      </Option>
-                    </Select>,
-                  )}
-                </FormItem>
-              </div>
-            </FormItem>
+            {/*<FormItem*/}
+            {/*  {...formItemLayout}*/}
+            {/*  label={*/}
+            {/*    <span>*/}
+            {/*      <FormattedMessage id="projectform.client.label" />*/}
+            {/*      <em className={styles.optional}>*/}
+            {/*        <FormattedMessage id="projectform.form.optional" />*/}
+            {/*        <Tooltip title={<FormattedMessage id="projectform.label.tooltip" />}>*/}
+            {/*          <Icon*/}
+            {/*            type="info-circle-o"*/}
+            {/*            style={{*/}
+            {/*              marginRight: 4,*/}
+            {/*            }}*/}
+            {/*          />*/}
+            {/*        </Tooltip>*/}
+            {/*      </em>*/}
+            {/*    </span>*/}
+            {/*  }*/}
+            {/*>*/}
+            {/*  {getFieldDecorator('client')(*/}
+            {/*    <Input*/}
+            {/*      placeholder={formatMessage({*/}
+            {/*        id: 'projectform.client.placeholder',*/}
+            {/*      })}*/}
+            {/*    />,*/}
+            {/*  )}*/}
+            {/*</FormItem>*/}
+            {/*<FormItem*/}
+            {/*  {...formItemLayout}*/}
+            {/*  label={*/}
+            {/*    <span>*/}
+            {/*      <FormattedMessage id="projectform.invites.label" />*/}
+            {/*      <em className={styles.optional}>*/}
+            {/*        <FormattedMessage id="projectform.form.optional" />*/}
+            {/*      </em>*/}
+            {/*    </span>*/}
+            {/*  }*/}
+            {/*>*/}
+            {/*  {getFieldDecorator('invites')(*/}
+            {/*    <Input*/}
+            {/*      placeholder={formatMessage({*/}
+            {/*        id: 'projectform.invites.placeholder',*/}
+            {/*      })}*/}
+            {/*    />,*/}
+            {/*  )}*/}
+            {/*</FormItem>*/}
+            {/*<FormItem*/}
+            {/*  {...formItemLayout}*/}
+            {/*  label={*/}
+            {/*    <span>*/}
+            {/*      <FormattedMessage id="projectform.weight.label" />*/}
+            {/*      <em className={styles.optional}>*/}
+            {/*        <FormattedMessage id="projectform.form.optional" />*/}
+            {/*      </em>*/}
+            {/*    </span>*/}
+            {/*  }*/}
+            {/*>*/}
+            {/*  {getFieldDecorator('weight')(*/}
+            {/*    <InputNumber*/}
+            {/*      placeholder={formatMessage({*/}
+            {/*        id: 'projectform.weight.placeholder',*/}
+            {/*      })}*/}
+            {/*      min={0}*/}
+            {/*      max={100}*/}
+            {/*    />,*/}
+            {/*  )}*/}
+            {/*  <span className="ant-form-text">%</span>*/}
+            {/*</FormItem>*/}
+            {/*<FormItem*/}
+            {/*  {...formItemLayout}*/}
+            {/*  label={<FormattedMessage id="projectform.public.label" />}*/}
+            {/*  help={<FormattedMessage id="projectform.label.help" />}*/}
+            {/*>*/}
+            {/*  <div>*/}
+            {/*    {getFieldDecorator('public', {*/}
+            {/*      initialValue: '1',*/}
+            {/*    })(*/}
+            {/*      <Radio.Group>*/}
+            {/*        <Radio value="1">*/}
+            {/*          <FormattedMessage id="projectform.radio.public" />*/}
+            {/*        </Radio>*/}
+            {/*        <Radio value="2">*/}
+            {/*          <FormattedMessage id="projectform.radio.partially-public" />*/}
+            {/*        </Radio>*/}
+            {/*        <Radio value="3">*/}
+            {/*          <FormattedMessage id="projectform.radio.private" />*/}
+            {/*        </Radio>*/}
+            {/*      </Radio.Group>,*/}
+            {/*    )}*/}
+            {/*    <FormItem*/}
+            {/*      style={{*/}
+            {/*        marginBottom: 0,*/}
+            {/*      }}*/}
+            {/*    >*/}
+            {/*      {getFieldDecorator('publicUsers')(*/}
+            {/*        <Select*/}
+            {/*          mode="multiple"*/}
+            {/*          placeholder={formatMessage({*/}
+            {/*            id: 'projectform.publicUsers.placeholder',*/}
+            {/*          })}*/}
+            {/*          style={{*/}
+            {/*            margin: '8px 0',*/}
+            {/*            display: getFieldValue('public') === '2' ? 'block' : 'none',*/}
+            {/*          }}*/}
+            {/*        >*/}
+            {/*          <Option value="1">*/}
+            {/*            <FormattedMessage id="projectform.option.A" />*/}
+            {/*          </Option>*/}
+            {/*          <Option value="2">*/}
+            {/*            <FormattedMessage id="projectform.option.B" />*/}
+            {/*          </Option>*/}
+            {/*          <Option value="3">*/}
+            {/*            <FormattedMessage id="projectform.option.C" />*/}
+            {/*          </Option>*/}
+            {/*        </Select>,*/}
+            {/*      )}*/}
+            {/*    </FormItem>*/}
+            {/*  </div>*/}
+            {/*</FormItem>*/}
             <FormItem
               {...submitFormLayout}
               style={{

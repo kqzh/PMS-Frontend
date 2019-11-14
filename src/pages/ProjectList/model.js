@@ -1,4 +1,4 @@
-import { queryFakeList } from './service';
+import { queryFakeList ,deleteList} from './service';
 
 const Model = {
   namespace: 'listCardList',
@@ -7,10 +7,18 @@ const Model = {
   },
   effects: {
     *fetch({ payload }, { call, put }) {
+
       const response = yield call(queryFakeList, payload);
       yield put({
         type: 'queryList',
-        payload: Array.isArray(response) ? response : [],
+        payload: Array.isArray(response.data) ? response.data : [],
+      });
+    },
+    *remove({ payload }, { call, put }) {
+      const response = yield call(deleteList, payload);
+      yield put({
+        type: 'queryList',
+        payload: Array.isArray(response.data) ? response.data : [],
       });
     },
   },

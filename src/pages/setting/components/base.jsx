@@ -37,8 +37,8 @@ const validatorPhone = (rule, value, callback) => {
   callback();
 };
 
-@connect(({ setting }) => ({
-  currentUser: setting.currentUser,
+@connect(({ user }) => ({
+  currentUser: user.currentUser,
 }))
 class BaseView extends Component {
   view = undefined;
@@ -79,7 +79,6 @@ class BaseView extends Component {
 
   setBaseInfo = () => {
     const { currentUser, form } = this.props;
-
     if (currentUser) {
 
       Object.keys(form.getFieldsValue()).forEach(key => {
@@ -116,6 +115,7 @@ class BaseView extends Component {
         ...fields,
       },
     });
+
     message.success('更新基本信息成功');
   };
 
@@ -148,7 +148,7 @@ class BaseView extends Component {
               })(<Input />)}
             </FormItem>
             <FormItem label="昵称">
-              {getFieldDecorator('name', {
+              {getFieldDecorator('nickname', {
                 rules: [
                   {
                     required: true,

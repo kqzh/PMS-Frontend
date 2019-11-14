@@ -127,13 +127,14 @@ export default {
               path: '/center',
               component: './center',
               authority: ['user'],
+              hideInMenu: true,
             },
             {
               name: '个人设置',
               icon: 'smile',
               path: '/setting',
               component: './setting',
-              authority: ['admin', 'user'],
+              authority: ['admin'],
             },
             {
               name: '基础表单',
