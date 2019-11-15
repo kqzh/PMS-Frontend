@@ -22,6 +22,7 @@ import moment from 'moment';
 import CreateForm from './components/CreateForm';
 import StandardTable from './components/StandardTable';
 import UpdateForm from './components/UpdateForm';
+import AddProjectForm from './components/AddProjectForm';
 import styles from './style.less';
 import { Link } from 'react-router-dom';
 const FormItem = Form.Item;
@@ -38,11 +39,13 @@ const status = ['关闭', '运行中', '已上线', '异常'];
 /* eslint react/no-multi-comp:0 */
 @connect(({ listTableList, loading }) => ({
   listTableList,
+  myProjects:listTableList.projects,
   loading: loading.models.listTableList,
 }))
 class TableList extends Component {
   state = {
     modalVisible: false,
+    projectModalVisible:false,
     updateModalVisible: false,
     selectedRows: [],
     formValues: {},
@@ -103,7 +106,7 @@ class TableList extends Component {
       title: '操作',
       render: (text, record) => (
         <Fragment>
-          <Link  to={"/userlist/user/id"}>查看</Link>
+          <Link  to={"/userproject?student_id="+record.student_id}>查看</Link>
           <Divider type="vertical" />
             <a onClick={() => this.handleUpdateModalVisible(true, record)}>修改</a>
           <Divider type="vertical" />
@@ -119,6 +122,9 @@ class TableList extends Component {
     dispatch({
       type: 'listTableList/fetch',
     });
+    dispatch({
+      type:"listTableList/getProject"
+    })
   }
 
   handleRemoveClick = (record) =>{
@@ -174,7 +180,7 @@ class TableList extends Component {
   };
   handleMenuClick = e => {
     const { dispatch } = this.props;
-    const { selectedRows } = this.state;
+    const { selectedRows ,projectModalVisible} = this.state;
     if (!selectedRows) return;
 
     switch (e.key) {
@@ -191,6 +197,12 @@ class TableList extends Component {
             message.success('删除成功');
           },
         });
+        break;
+      case 'addProject':
+        this.handleProjectModalVisible(projectModalVisible);
+        break;
+      case 'removeProject':
+        this.handleProjectModalVisible(projectModalVisible);
         break;
 
       default:
@@ -225,12 +237,35 @@ class TableList extends Component {
       modalVisible: !!flag,
     });
   };
+  handleProjectModalVisible = flag=>{
+    this.setState({
+      projectModalVisible: !flag,
+    });
+  };
   handleUpdateModalVisible = (flag, record) => {
     this.setState({
       updateModalVisible: !!flag,
       stepFormValues: record || {},
     });
   };
+  handleAddProject = fields => {
+    const { dispatch } = this.props;
+    console.log(fields);
+    dispatch({
+      type: 'listTableList/addProject',
+      payload: {
+       ...fields
+      },
+      callback: () => {
+        this.setState({
+          selectedRows: [],
+        });
+      },
+    });
+    message.success('添加成功~');
+    this.handleModalVisible();
+  };
+
   handleAdd = fields => {
     const { dispatch } = this.props;
     dispatch({
@@ -323,18 +358,24 @@ class TableList extends Component {
     const {
       listTableList: { data },
       loading,
+      myProjects
     } = this.props;
-    const { selectedRows, modalVisible, updateModalVisible, stepFormValues } = this.state;
+    const { selectedRows, modalVisible, updateModalVisible, stepFormValues,projectModalVisible } = this.state;
     const menu = (
       <Menu onClick={this.handleMenuClick} selectedKeys={[]}>
-        <Menu.Item key="">添加项目</Menu.Item>
-        <Menu.Item key="remove">删除</Menu.Item>
+        <Menu.Item key="addProject">添加项目</Menu.Item>
+        {/*<Menu.Item key="removeProject">删除项目</Menu.Item>*/}
+        <Menu.Item key="remove">删除学生</Menu.Item>
 
       </Menu>
     );
     const parentMethods = {
       handleAdd: this.handleAdd,
       handleModalVisible: this.handleModalVisible,
+    };
+    const projectMethods={
+      handleAddProject :this.handleAddProject,
+      handleProjectModalVisible: this.handleProjectModalVisible,
     };
     const updateMethods = {
       handleUpdateModalVisible: this.handleUpdateModalVisible,
@@ -370,6 +411,8 @@ class TableList extends Component {
           </div>
         </Card>
         <CreateForm {...parentMethods} modalVisible={modalVisible} />
+        <AddProjectForm {...projectMethods} projectModalVisible={projectModalVisible}
+                        myProjects={myProjects.data} keys={selectedRows}/>
         {stepFormValues && Object.keys(stepFormValues).length ? (
           <UpdateForm
             {...updateMethods}

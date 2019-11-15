@@ -22,3 +22,14 @@ export async function updateRule(params) {
     data: params ,
   });
 }
+export async function addProject(params){
+  return request("server/api/store",{
+    method:"POST",
+    data:params
+  })
+}
+export async function queryProject() {
+  return request("server/api/projects",{
+    method:'GET',
+  })
+}

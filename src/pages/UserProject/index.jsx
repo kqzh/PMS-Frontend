@@ -7,40 +7,18 @@ import TagSelect from './components/TagSelect';
 import styles from './style.less';
 const { Option } = Select;
 const FormItem = Form.Item;
-export function formatWan(val) {
-  const v = val * 1;
-  if (!v || Number.isNaN(v)) return '';
-  let result = val;
-
-  if (val > 10000) {
-    result = (
-      <span>
-        {Math.floor(val / 10000)}
-        <span
-          style={{
-            position: 'relative',
-            top: -2,
-            fontSize: 14,
-            fontStyle: 'normal',
-            marginLeft: 2,
-          }}
-        >
-          万
-        </span>
-      </span>
-    );
-  }
-
-  return result;
-}
 
 class UserProject extends Component {
   componentDidMount() {
-    const { dispatch } = this.props;
+    const { dispatch ,location} = this.props;
+
+    dispatch({
+      type:'userProject/getProject'
+    });
     dispatch({
       type: 'userProject/fetch',
       payload: {
-        count: 8,
+        ...location.query
       },
     });
   }
@@ -50,18 +28,20 @@ class UserProject extends Component {
       userProject: { list },
       loading,
       form,
+      myProjects
     } = this.props;
     const { getFieldDecorator } = form;
 
-    const CardInfo = ({ activeUser, newUser }) => (
+    const CardInfo = ({ projectStatus, projectScore }) => (
+
       <div className={styles.cardInfo}>
-        <div>
-          <p>活跃用户</p>
-          <p>{activeUser}</p>
+        <div style={{textAlign:"center"}}>
+          <p>完成进度</p>
+          <p>{projectStatus}</p>
         </div>
-        <div>
-          <p>新增用户</p>
-          <p>{newUser}</p>
+        <div style={{textAlign:"center"}}>
+          <p>项目分数</p>
+          <p>{projectScore}</p>
         </div>
       </div>
     );
@@ -100,7 +80,7 @@ class UserProject extends Component {
         <Card bordered={false}>
           <Form layout="inline">
             <StandardFormRow
-              title="所属类目"
+              title="所属项目"
               block
               style={{
                 paddingBottom: 11,
@@ -109,18 +89,12 @@ class UserProject extends Component {
               <FormItem>
                 {getFieldDecorator('category')(
                   <TagSelect expandable>
-                    <TagSelect.Option value="cat1">类目一</TagSelect.Option>
-                    <TagSelect.Option value="cat2">类目二</TagSelect.Option>
-                    <TagSelect.Option value="cat3">类目三</TagSelect.Option>
-                    <TagSelect.Option value="cat4">类目四</TagSelect.Option>
-                    <TagSelect.Option value="cat5">类目五</TagSelect.Option>
-                    <TagSelect.Option value="cat6">类目六</TagSelect.Option>
-                    <TagSelect.Option value="cat7">类目七</TagSelect.Option>
-                    <TagSelect.Option value="cat8">类目八</TagSelect.Option>
-                    <TagSelect.Option value="cat9">类目九</TagSelect.Option>
-                    <TagSelect.Option value="cat10">类目十</TagSelect.Option>
-                    <TagSelect.Option value="cat11">类目十一</TagSelect.Option>
-                    <TagSelect.Option value="cat12">类目十二</TagSelect.Option>
+                    {
+                      myProjects.map(item=>{
+                        return <TagSelect.Option value={item.id} key={item.id}>{item.title}</TagSelect.Option>
+                      })
+                    }
+
                   </TagSelect>,
                 )}
               </FormItem>
@@ -143,8 +117,8 @@ class UserProject extends Component {
                   </FormItem>
                 </Col>
                 <Col lg={8} md={10} sm={10} xs={24}>
-                  <FormItem {...formItemLayout} label="好评度">
-                    {getFieldDecorator('rate', {})(
+                  <FormItem {...formItemLayout} label="学生班级">
+                    {getFieldDecorator('class', {})(
                       <Select
                         placeholder="不限"
                         style={{
@@ -164,7 +138,7 @@ class UserProject extends Component {
         </Card>
         <br />
         <List
-          rowKey="id"
+          rowKey="key"
           grid={{
             gutter: 24,
             xl: 4,
@@ -176,7 +150,7 @@ class UserProject extends Component {
           loading={loading}
           dataSource={list}
           renderItem={item => (
-            <List.Item key={item.id}>
+            <List.Item key={item.key}>
               <Card
                 hoverable
                 bodyStyle={{
@@ -200,8 +174,8 @@ class UserProject extends Component {
                 <Card.Meta avatar={<Avatar size="small" src={item.avatar} />} title={item.title} />
                 <div className={styles.cardItemContent}>
                   <CardInfo
-                    activeUser={formatWan(item.activeUser)}
-                    newUser={numeral(item.newUser).format('0,0')}
+                    projectStatus={item.status}
+                    projectScore={numeral(item.score).format('0,0')}
                   />
                 </div>
               </Card>
@@ -213,19 +187,22 @@ class UserProject extends Component {
   }
 }
 
+
 const WarpForm = Form.create({
-  onValuesChange({ dispatch }) {
+  onValuesChange({ dispatch },props) {
+    //console.log(props);
     // 表单项变化时请求数据
     // 模拟查询表单生效
     dispatch({
-      type: 'userProject/fetch',
+      type: 'userProject/getChange',
       payload: {
-        count: 8,
+        ...props
       },
     });
   },
 })(UserProject);
 export default connect(({ userProject, loading }) => ({
   userProject,
+  myProjects:userProject.projects,
   loading: loading.models.userProject,
 }))(WarpForm);

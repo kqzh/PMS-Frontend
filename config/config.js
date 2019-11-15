@@ -103,7 +103,7 @@ export default {
               redirect: '/welcome',
             },
             {
-              name: '空白页面',
+              name: 'Welcome',
               icon: 'smile',
               path: '/welcome',
               component: './welcome',

@@ -1,4 +1,4 @@
-import { addRule, queryRule, removeRule, updateRule } from './service';
+import { addRule, queryRule, removeRule, updateRule ,addProject,queryProject} from './service';
 
 const Model = {
   namespace: 'listTableList',
@@ -7,6 +7,7 @@ const Model = {
       list: [],
       pagination: {},
     },
+    projects:["123","456"]
   },
   effects: {
     *fetch({ payload }, { call, put }) {
@@ -16,13 +17,28 @@ const Model = {
         payload: response,
       });
     },
-
+    *getProject({ payload }, { call, put }) {
+      const response = yield call(queryProject, payload);
+      yield put({
+        type: 'saveProject',
+        payload: response,
+      });
+    },
     *add({ payload, callback }, { call, put }) {
       const response = yield call(addRule, payload);
       yield put({
         type: 'save',
         payload: response,
       });
+      if (callback) callback();
+    },
+    //fake add project
+    *addProject({ payload, callback }, { call, put }) {
+      const response = yield call(addProject, payload);
+      // yield put({
+      //   type: 'save',
+      //   payload: response,
+      // });
       if (callback) callback();
     },
 
@@ -50,6 +66,9 @@ const Model = {
     save(state, action) {
       return { ...state, data: action.payload };
     },
+    saveProject(state,action){
+      return {...state,projects:action.payload};
+    }
   },
 };
 export default Model;
