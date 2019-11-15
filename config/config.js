@@ -86,6 +86,7 @@ export default {
           path: '/user/login',
           component: './user/login',
         },
+
       ],
     },
     {
@@ -113,6 +114,13 @@ export default {
               path: '/projectlist',
               component: './ProjectList',
               authority: ['admin'], //hideInMenu: true,
+            },
+            {
+              name: '项目查看',
+              icon: 'smile',
+              path: '/userproject',
+              component: './UserProject',
+              authority: ['admin'],
             },
             {
               name: '学生管理',
@@ -144,7 +152,6 @@ export default {
               authority: ['admin'],
               hideInMenu: true,
             },
-
             {
               component: './404',
             },

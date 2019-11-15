@@ -108,21 +108,33 @@ class BaseView extends Component {
     this.view = ref;
   };
   handleUpdate = fields => {
-    const { dispatch } = this.props;
+    const { dispatch ,currentUser} = this.props;
+    console.log(currentUser);
+    const values = {...fields,key:currentUser.key,username:currentUser.username};
     dispatch({
       type: 'setting/update',
       payload: {
-        ...fields,
+        ...values,
       },
     });
+    setTimeout(()=>{
+      dispatch({
+        type: 'user/fetchCurrent',
+        authority:"admin",
+        username: currentUser.username
 
-    message.success('更新基本信息成功');
+      });
+      message.success('更新基本信息成功');
+    },500);
+
+
   };
 
   handlerSubmit = event => {
     event.preventDefault();
     const { form } = this.props;
     form.validateFields((err,fieldsValue) => {
+
       if (!err) {
         this.handleUpdate(fieldsValue);
       }

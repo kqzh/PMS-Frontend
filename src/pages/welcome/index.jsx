@@ -10,7 +10,9 @@ export default () => {
     }, 3000);
   }, []);
   return (
+
     <PageHeaderWrapper content="这是一个新页面，从这里进行开发！" className={styles.main}>
+
       <div
         style={{
           paddingTop: 100,
