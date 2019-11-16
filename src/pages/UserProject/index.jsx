@@ -9,6 +9,15 @@ const { Option } = Select;
 const FormItem = Form.Item;
 
 class UserProject extends Component {
+  handleDelete = (key)=>{
+    const {dispatch } = this.props;
+    dispatch({
+      type: 'userProject/remove',
+      payload: {
+        sid:key
+      },
+    })
+  };
   componentDidMount() {
     const { dispatch ,location} = this.props;
 
@@ -126,8 +135,8 @@ class UserProject extends Component {
                           width: '100%',
                         }}
                       >
-                        <Option value="good">优秀</Option>
-                        <Option value="normal">普通</Option>
+                        <Option value="计算机174">计算机174</Option>
+                        <Option value="计算机175">计算机175</Option>
                       </Select>,
                     )}
                   </FormItem>
@@ -157,18 +166,17 @@ class UserProject extends Component {
                   paddingBottom: 20,
                 }}
                 actions={[
-                  <Tooltip key="download" title="下载">
-                    <Icon type="download" />
-                  </Tooltip>,
-                  <Tooltip key="edit" title="编辑">
+                  <Tooltip key="edit" title="评分">
                     <Icon type="edit" />
                   </Tooltip>,
-                  <Tooltip title="分享" key="share">
-                    <Icon type="share-alt" />
+                  <Tooltip key="calendar" title="查看进度">
+                    <Icon type="calendar" />
                   </Tooltip>,
-                  <Dropdown key="ellipsis" overlay={itemMenu}>
-                    <Icon type="ellipsis" />
-                  </Dropdown>,
+
+                  <Tooltip title="删除" key="delete" onClick={()=>this.handleDelete(item.sid)}>
+                    <Icon type="delete" />
+                  </Tooltip>,
+
                 ]}
               >
                 <Card.Meta avatar={<Avatar size="small" src={item.avatar} />} title={item.title} />

@@ -1,4 +1,4 @@
-import { queryFakeList,queryProject } from './service';
+import { queryFakeList,queryProject,deleteStore } from './service';
 
 
 const Model = {
@@ -8,7 +8,7 @@ const Model = {
     projects:[],
     params:{
       category:[],
-      class:"123",
+      class:"",
       author:"",
     }
   },
@@ -20,10 +20,17 @@ const Model = {
         payload: Array.isArray(response.data) ? response.data : [],
       });
     },
+    *remove({ payload }, { call, put }) {
+      const response = yield call(deleteStore, payload);
+      yield put({
+        type: 'queryList',
+        payload: Array.isArray(response.data) ? response.data : [],
+      });
+    },
 
     *getChange({payload},{call,put,select}){
-      let state = yield select(state => state.userProject.params)
-      const values = {...state,...payload}
+      let state = yield select(state => state.userProject.params);
+      const values = {...state,...payload};
       yield put({
         type: 'saveParams',
         payload: values,

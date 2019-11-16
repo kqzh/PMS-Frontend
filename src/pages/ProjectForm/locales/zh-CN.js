@@ -54,4 +54,6 @@ export default {
   'projectform.option.A': '同事甲',
   'projectform.option.B': '同事乙',
   'projectform.option.C': '同事丙',
+  'projectform.upload.label':'图标上传',
+  'projectform.upload.required':'请上传项目图标'
 };

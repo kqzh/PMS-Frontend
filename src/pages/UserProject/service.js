@@ -10,3 +10,8 @@ export async function queryProject() {
     method:'GET',
   })
 }
+export async function deleteStore(params){
+  return request('/server/api/store/'+params.sid, {
+    method:'DELETE',
+  });
+}
