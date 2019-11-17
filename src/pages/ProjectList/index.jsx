@@ -50,11 +50,11 @@ class ListCardList extends Component {
           </a>
           <a>
             <img alt="" src="https://gw.alipayobjects.com/zos/rmsportal/NbuDUAuBlIApFuDvWiND.svg" />{' '}
-            产品简介
+            系统简介
           </a>
           <a>
             <img alt="" src="https://gw.alipayobjects.com/zos/rmsportal/ohOEPSYdDTNnyMbGuyLb.svg" />{' '}
-            产品文档
+            系统文档
           </a>
         </div>
       </div>

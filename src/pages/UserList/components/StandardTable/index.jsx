@@ -139,7 +139,7 @@ class StandardTable extends Component {
           />
         </div>
         <Table
-          rowKey={rowKey || 'key'}
+          rowKey={rowKey || 'student_id'}
           rowSelection={rowSelection}
           dataSource={list}
           pagination={paginationProps}

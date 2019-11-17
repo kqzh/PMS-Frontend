@@ -4,7 +4,7 @@ const FormItem = Form.Item;
 
 const AddProjectForm = props => {
   const { handleProjectModalVisible, form, handleAddProject, projectModalVisible,myProjects ,keys} = props;
-  const key = keys.map(row=>row.key);
+  const key = keys.map(row=>row.student_id);
   if(!myProjects){
     return <div></div>
   }

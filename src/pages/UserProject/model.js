@@ -1,4 +1,5 @@
-import { queryFakeList,queryProject,deleteStore } from './service';
+import { queryFakeList,queryProject,deleteStore,scoreStore } from './service';
+import { message } from 'antd';
 
 
 const Model = {
@@ -8,7 +9,7 @@ const Model = {
     projects:[],
     params:{
       category:[],
-      class:"",
+      status:"",
       author:"",
     }
   },
@@ -27,6 +28,15 @@ const Model = {
         payload: Array.isArray(response.data) ? response.data : [],
       });
     },
+    *score({ payload }, { call, put }) {
+      yield call(scoreStore, payload);
+      const response = yield call(queryFakeList);
+      message.success('评分成功');
+      yield put({
+        type: 'queryList',
+        payload: Array.isArray(response.data) ? response.data : [],
+      });
+    },
 
     *getChange({payload},{call,put,select}){
       let state = yield select(state => state.userProject.params);
@@ -35,8 +45,8 @@ const Model = {
         type: 'saveParams',
         payload: values,
       });
-
       const response = yield call(queryFakeList, values);
+
       yield put({
         type: 'queryList',
         payload: Array.isArray(response.data) ? response.data : [],

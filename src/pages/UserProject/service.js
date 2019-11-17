@@ -11,7 +11,15 @@ export async function queryProject() {
   })
 }
 export async function deleteStore(params){
-  return request('/server/api/store/'+params.sid, {
+  return request('/server/api/store', {
     method:'DELETE',
+    params
+  });
+}
+
+export async function scoreStore(params){
+  return request('/server/api/store/score', {
+    method:'PUT',
+    params
   });
 }

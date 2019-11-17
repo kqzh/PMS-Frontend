@@ -129,11 +129,10 @@ class TableList extends Component {
 
   handleRemoveClick = (record) =>{
     const { dispatch } = this.props;
-
     dispatch({
       type: 'listTableList/remove',
       payload: {
-        key: [record.key],
+        key: [record.student_id],
       },
       callback: () => {
         console.log("delete success");
@@ -188,7 +187,7 @@ class TableList extends Component {
         dispatch({
           type: 'listTableList/remove',
           payload: {
-            key: selectedRows.map(row => row.key),
+            key: selectedRows.map(row => row.student_id),
           },
           callback: () => {
             this.setState({

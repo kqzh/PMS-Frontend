@@ -1,22 +1,57 @@
 import { Avatar, Card, Col, Dropdown, Form, Icon, List, Menu, Row, Select, Tooltip } from 'antd';
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'dva';
 import numeral from 'numeral';
 import StandardFormRow from './components/StandardFormRow';
 import TagSelect from './components/TagSelect';
 import styles from './style.less';
+import CreateForm from '../UserList/components/CreateForm';
+import ProjectScore from './components/ProjectScore';
+import Input from 'antd/es/input';
 const { Option } = Select;
 const FormItem = Form.Item;
 
 class UserProject extends Component {
-  handleDelete = (key)=>{
+  state={
+    scoreVisible:false,
+    selectProject:{
+      id:-1,
+      pid:-1
+    },
+    status:"",
+    author:""
+  };
+  handleDelete = (student_id,pid)=>{
     const {dispatch } = this.props;
     dispatch({
       type: 'userProject/remove',
       payload: {
-        sid:key
+        student_id,
+        pid
       },
     })
+  };
+  handleScoreModalVisible = (flag,student_id,pid) => {
+    if (student_id !==undefined){
+      this.setState({
+        selectProject:{
+          student_id,
+          pid
+        },
+      })
+    }
+    this.setState({
+      scoreVisible: !flag,
+    });
+  };
+  handleScore = fields => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'userProject/score',
+      payload: {
+        ...fields
+      },
+    });
   };
   componentDidMount() {
     const { dispatch ,location} = this.props;
@@ -35,21 +70,35 @@ class UserProject extends Component {
   render() {
     const {
       userProject: { list },
+      userProject: { params },
       loading,
       form,
       myProjects
     } = this.props;
+    const {author,status} = this.state;
     const { getFieldDecorator } = form;
+    const projectMethods={
+      handleScore :this.handleScore,
+      handleScoreModalVisible: this.handleScoreModalVisible,
+    };
+    const CardInfo = ({ projectStatus, projectScore,student_name,student_class}) => (
 
-    const CardInfo = ({ projectStatus, projectScore }) => (
+      <div className={styles.cardInfo} >
+      <div style={{textAlign:"center",marginBottom:"5px"}}>
+          <p >{"学生姓名"}</p>
+          <p style={{fontSize:14}}>{student_name}</p>
+      </div >
 
-      <div className={styles.cardInfo}>
-        <div style={{textAlign:"center"}}>
+        <div style={{textAlign:"center",marginBottom:"5px"}}>
           <p>完成进度</p>
           <p>{projectStatus}</p>
         </div>
         <div style={{textAlign:"center"}}>
-          <p>项目分数</p>
+          <p >{"学生班级"}</p>
+          <p style={{fontSize:12}}>{student_class}</p>
+        </div>
+        <div style={{textAlign:"center"}}>
+          <p>项目评分</p>
           <p>{projectScore}</p>
         </div>
       </div>
@@ -111,32 +160,38 @@ class UserProject extends Component {
             <StandardFormRow title="其它选项" grid last>
               <Row gutter={16}>
                 <Col lg={8} md={10} sm={10} xs={24}>
-                  <FormItem {...formItemLayout} label="作者">
-                    {getFieldDecorator('author', {})(
-                      <Select
+                  <FormItem {...formItemLayout} label="学生学号">
+                    {getFieldDecorator('author', {
+                      initialValue:params.author
+                    })(
+                      <Input
                         placeholder="不限"
                         style={{
                           maxWidth: 200,
                           width: '100%',
                         }}
                       >
-                        <Option value="lisa">王昭君</Option>
-                      </Select>,
+
+                      </Input>,
                     )}
                   </FormItem>
                 </Col>
                 <Col lg={8} md={10} sm={10} xs={24}>
-                  <FormItem {...formItemLayout} label="学生班级">
-                    {getFieldDecorator('class', {})(
+                  <FormItem {...formItemLayout} label="完成进度">
+                    {getFieldDecorator('status', {
+                      initialValue: params.status
+                    })(
                       <Select
-                        placeholder="不限"
                         style={{
                           maxWidth: 200,
                           width: '100%',
                         }}
                       >
-                        <Option value="计算机174">计算机174</Option>
-                        <Option value="计算机175">计算机175</Option>
+                        <Option value="">不限</Option>
+                        <Option value="0">未申请</Option>
+                        <Option value="1">第一周</Option>
+                        <Option value="2">第二周</Option>
+                        <Option value="3">已提交</Option>
                       </Select>,
                     )}
                   </FormItem>
@@ -158,6 +213,7 @@ class UserProject extends Component {
           }}
           loading={loading}
           dataSource={list}
+
           renderItem={item => (
             <List.Item key={item.key}>
               <Card
@@ -166,14 +222,14 @@ class UserProject extends Component {
                   paddingBottom: 20,
                 }}
                 actions={[
-                  <Tooltip key="edit" title="评分">
+                  <Tooltip key="edit" title="评分" onClick={()=>this.handleScoreModalVisible(this.state.scoreVisible,item.student_id,item.pid)}>
                     <Icon type="edit" />
                   </Tooltip>,
                   <Tooltip key="calendar" title="查看进度">
                     <Icon type="calendar" />
                   </Tooltip>,
 
-                  <Tooltip title="删除" key="delete" onClick={()=>this.handleDelete(item.sid)}>
+                  <Tooltip title="删除" key="delete" onClick={()=>this.handleDelete(item.student_id,item.pid)}>
                     <Icon type="delete" />
                   </Tooltip>,
 
@@ -184,13 +240,17 @@ class UserProject extends Component {
                   <CardInfo
                     projectStatus={item.status}
                     projectScore={numeral(item.score).format('0,0')}
+                    student_name={item.name}
+                    student_class = {item.class}
                   />
                 </div>
               </Card>
             </List.Item>
           )}
         />
+        <ProjectScore {...projectMethods} scoreVisible={this.state.scoreVisible} select={this.state.selectProject}/>
       </div>
+
     );
   }
 }
@@ -211,6 +271,7 @@ const WarpForm = Form.create({
 })(UserProject);
 export default connect(({ userProject, loading }) => ({
   userProject,
+
   myProjects:userProject.projects,
   loading: loading.models.userProject,
 }))(WarpForm);
