@@ -18,6 +18,8 @@ const Model = {
       }); // Login successfully
 
       if (response.status === 'ok') {
+        console.log(response.token);
+        localStorage.setItem("pro_token",response.token);
         const urlParams = new URL(window.location.href);
         const params = getPageQuery();
         let { redirect } = params;
@@ -38,7 +40,7 @@ const Model = {
         /*
         不同权限跳转到不同的路由
          */
-
+          console.log(123);
           yield put(routerRedux.replace('/welcome'));
       }
     },

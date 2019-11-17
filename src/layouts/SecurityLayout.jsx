@@ -26,17 +26,21 @@ class SecurityLayout extends React.Component {
 
   render() {
     const { isReady } = this.state;
-    const { children, loading,loginName,currentUser } = this.props; // You can replace it to your authentication rule (such as check token exists)
+    const { children, loading,currentStatus } = this.props; // You can replace it to your authentication rule (such as check token exists)
     // 你可以把它替换成你自己的登录认证规则（比如判断 token 是否存在）
-    const isLogin = loginName!==undefined;
-    const queryString = stringify({
-      redirect: window.location.href,
-    });
-    if ((!isLogin && loading) || !isReady) {
-      return <PageLoading />;
-    }
-    if (!isLogin) {
-      return <Redirect to={`/user/login`}></Redirect>;
+    let token = localStorage.getItem("pro_token");
+    //console.log(token);
+    // const isLogin = loginName!==undefined;
+    // const queryString = stringify({
+    //   redirect: window.location.href,
+    // });
+    //console.log(currentStatus);
+    // if (loading ) {
+    //   return <PageLoading />;
+    // }
+    //console.log(token,currentStatus);
+    if (token==null) {
+      return <Redirect to={`/user/login`}/>;
       // return <Redirect to={`/user/login?${queryString}`}></Redirect>;
     }
     return children;
@@ -45,7 +49,7 @@ class SecurityLayout extends React.Component {
 
 export default connect(({ user, loading,login }) => ({
   currentUser: user.currentUser,
+  currentStatus:user.status,
   loading: loading.models.user,
-  loginName:login.username,
-  loginCurrentAuthority:login.currentAuthority,
+  loginName:login.username
 }))(SecurityLayout);
