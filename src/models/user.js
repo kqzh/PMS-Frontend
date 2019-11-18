@@ -1,6 +1,7 @@
 import { queryCurrent, query as queryUsers } from '@/services/user';
 
-import {routerRedux} from 'dva/router'
+import {message} from 'antd';
+
 const UserModel = {
   namespace: 'user',
   state: {
@@ -18,7 +19,11 @@ const UserModel = {
 
     *fetchCurrent(payload, { call, put }) {
       const response = yield call(queryCurrent,payload);
-
+      if(response.status!=="ok"){
+        localStorage.removeItem("pro_token")
+      }else{
+        message.success("登录成功")
+      }
       yield put({
         type: 'saveCurrentUser',
         payload: response.data,
