@@ -7,18 +7,18 @@ const Model = {
   },
   effects: {
     *fetch({ payload }, { call, put }) {
-
       const response = yield call(queryFakeList, payload);
       yield put({
         type: 'queryList',
-        payload: Array.isArray(response.data) ? response.data : [],
+        payload: Array.isArray(response) ? response : [],
       });
     },
     *remove({ payload }, { call, put }) {
-      const response = yield call(deleteList, payload);
+      yield call(deleteList, payload);
+      const response = yield call(queryFakeList);
       yield put({
         type: 'queryList',
-        payload: Array.isArray(response.data) ? response.data : [],
+        payload: Array.isArray(response) ? response : [],
       });
     },
   },

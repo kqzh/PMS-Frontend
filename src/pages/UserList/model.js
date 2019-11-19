@@ -7,7 +7,7 @@ const Model = {
       list: [],
       pagination: {},
     },
-    projects:["123","456"]
+    projects:[]
   },
   effects: {
     *fetch({ payload }, { call, put }) {
@@ -25,7 +25,8 @@ const Model = {
       });
     },
     *add({ payload, callback }, { call, put }) {
-      const response = yield call(addRule, payload);
+      yield call(addRule, payload);
+      const response = yield call(queryRule);
       yield put({
         type: 'save',
         payload: response,
@@ -35,26 +36,23 @@ const Model = {
     //fake add project
     *addProject({ payload, callback }, { call, put }) {
       const response = yield call(addProject, payload);
-      // yield put({
-      //   type: 'save',
-      //   payload: response,
-      // });
+
       if (callback) callback();
     },
 
     *remove({ payload, callback }, { call, put }) {
-      const response = yield call(removeRule, payload);
-
+      yield call(removeRule, payload);
+      const response = yield call(queryRule);
       yield put({
         type: 'save',
         payload: response,
       });
-      //tableListDataSource = tableListDataSource.filter(item => key.indexOf(item.key) === -1);
       if (callback) callback();
     },
 
     *update({ payload, callback }, { call, put }) {
-      const response = yield call(updateRule, payload);
+      yield call(updateRule, payload);
+      const response = yield call(queryRule);
       yield put({
         type: 'save',
         payload: response,
@@ -68,7 +66,7 @@ const Model = {
     },
     saveProject(state,action){
       return {...state,projects:action.payload};
-    }
+    },
   },
 };
 export default Model;

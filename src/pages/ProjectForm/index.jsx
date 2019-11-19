@@ -215,7 +215,7 @@ class ProjectForm extends Component {
                     }),
                   },
                 ],
-                initialValue: list.Standard,
+                initialValue: list.standard,
               })(
                 <TextArea
                   style={{

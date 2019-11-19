@@ -18,14 +18,15 @@ const Model = {
       const response = yield call(queryFakeList, payload);
       yield put({
         type: 'queryList',
-        payload: Array.isArray(response.data) ? response.data : [],
+        payload: Array.isArray(response) ? response : [],
       });
     },
     *remove({ payload }, { call, put }) {
-      const response = yield call(deleteStore, payload);
+      yield call(deleteStore, payload);
+      const response = yield call(queryFakeList);
       yield put({
         type: 'queryList',
-        payload: Array.isArray(response.data) ? response.data : [],
+        payload: Array.isArray(response) ? response : [],
       });
     },
     *score({ payload }, { call, put }) {
@@ -34,7 +35,7 @@ const Model = {
       message.success('评分成功');
       yield put({
         type: 'queryList',
-        payload: Array.isArray(response.data) ? response.data : [],
+        payload: Array.isArray(response) ? response : [],
       });
     },
 
@@ -49,7 +50,7 @@ const Model = {
 
       yield put({
         type: 'queryList',
-        payload: Array.isArray(response.data) ? response.data : [],
+        payload: Array.isArray(response) ? response : [],
       });
 
     },
@@ -58,7 +59,7 @@ const Model = {
       const response = yield call(queryProject, payload);
       yield put({
         type: 'saveProject',
-        payload: response.data,
+        payload: response,
       });
     },
   },

@@ -31,7 +31,7 @@ const GlobalHeaderRight = props => {
       <Tooltip title="使用文档">
         <a
           target="_blank"
-          href="https://pro.ant.design/docs/getting-started"
+          href="https://github.com/kqzh"
           rel="noopener noreferrer"
           className={styles.action}
         >

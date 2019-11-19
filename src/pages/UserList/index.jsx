@@ -181,7 +181,6 @@ class TableList extends Component {
     const { dispatch } = this.props;
     const { selectedRows ,projectModalVisible} = this.state;
     if (!selectedRows) return;
-
     switch (e.key) {
       case 'remove':
         dispatch({
@@ -280,7 +279,6 @@ class TableList extends Component {
     this.handleModalVisible();
   };
   handleUpdate = fields => {
-    console.log(fields);
     const { dispatch } = this.props;
     dispatch({
       type: 'listTableList/update',
@@ -411,7 +409,7 @@ class TableList extends Component {
         </Card>
         <CreateForm {...parentMethods} modalVisible={modalVisible} />
         <AddProjectForm {...projectMethods} projectModalVisible={projectModalVisible}
-                        myProjects={myProjects.data} keys={selectedRows}/>
+                        myProjects={myProjects} keys={selectedRows}/>
         {stepFormValues && Object.keys(stepFormValues).length ? (
           <UpdateForm
             {...updateMethods}

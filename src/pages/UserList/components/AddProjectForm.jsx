@@ -6,8 +6,10 @@ const AddProjectForm = props => {
   const { handleProjectModalVisible, form, handleAddProject, projectModalVisible,myProjects ,keys} = props;
   const key = keys.map(row=>row.student_id);
   if(!myProjects){
+
     return <div></div>
   }
+
   const okHandle = (key) => {
     form.validateFields((err, fieldsValue) => {
       if (err) {
@@ -52,7 +54,7 @@ const AddProjectForm = props => {
           >
             {
               myProjects.map(item=>{
-                return <Select.Option key={ item.id} value={item.id}>{item.title}</Select.Option>
+                return <Select.Option key={item.id} value={item.id}>{item.title}</Select.Option>
               })
             }
           </Select>,
