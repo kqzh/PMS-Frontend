@@ -121,7 +121,12 @@ class ProjectForm extends Component {
     const { list } = this.state;
     const startDate = moment(list.StartTime);
     const endDate = moment(list.EndTime);
-
+    const uploadProps = {
+      action:"/server/api/projects/upload",
+      headers:{
+        authorization:localStorage.getItem("pro_token")
+      }
+    };
     return (
       <PageHeaderWrapper content={<FormattedMessage id="projectform.basic.description" />}>
 
@@ -243,7 +248,7 @@ class ProjectForm extends Component {
                   },
                 ],
               })(
-                <Upload action={"/server/api/project/upload"}>
+                <Upload {...uploadProps}>
                   <Button>
                     <Icon type="upload" /> 点击上传
                   </Button>

@@ -39,7 +39,8 @@ const Model = {
         /*
         不同权限跳转到不同的路由
          */
-          yield put(routerRedux.replace('/welcome'));
+        window.location.href = '/welcome';
+          //yield put(routerRedux.replace('/welcome'));
       }
     },
 

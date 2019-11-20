@@ -6,7 +6,7 @@ export async function queryFakeList(params) {
   });
 }
 export async function deleteList(params) {
-  return request('server/api/project/'+params.key, {
+  return request('server/api/projects/'+params.key, {
     method: 'DELETE',
   });
 }
