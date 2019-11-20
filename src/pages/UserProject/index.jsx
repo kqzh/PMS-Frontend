@@ -8,6 +8,7 @@ import styles from './style.less';
 import CreateForm from '../UserList/components/CreateForm';
 import ProjectScore from './components/ProjectScore';
 import Input from 'antd/es/input';
+import { Link } from 'react-router-dom';
 const { Option } = Select;
 const FormItem = Form.Item;
 
@@ -225,9 +226,9 @@ class UserProject extends Component {
                   <Tooltip key="edit" title="评分" onClick={()=>this.handleScoreModalVisible(this.state.scoreVisible,item.student_id,item.pid)}>
                     <Icon type="edit" />
                   </Tooltip>,
-                  <Tooltip key="calendar" title="查看进度">
+                  <Link to = "userproject/detail?pid=123&student_id=456"><Tooltip key="calendar" title="查看进度">
                     <Icon type="calendar" />
-                  </Tooltip>,
+                  </Tooltip></Link>,
 
                   <Tooltip title="删除" key="delete" onClick={()=>this.handleDelete(item.student_id,item.pid)}>
                     <Icon type="delete" />

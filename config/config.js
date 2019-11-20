@@ -86,7 +86,6 @@ export default {
           path: '/user/login',
           component: './user/login',
         },
-
       ],
     },
     {
@@ -149,6 +148,14 @@ export default {
               icon: 'smile',
               path: '/projectlist/form',
               component: './ProjectForm',
+              authority: ['admin'],
+              hideInMenu: true,
+            },
+            {
+              name: '项目进度',
+              icon: 'smile',
+              path: '/userproject/detail',
+              component: './FormStepForm',
               authority: ['admin'],
               hideInMenu: true,
             },

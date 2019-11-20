@@ -106,7 +106,7 @@ class TableList extends Component {
       title: '操作',
       render: (text, record) => (
         <Fragment>
-          <Link  to={"/userproject?student_id="+record.student_id}>查看</Link>
+          <Link  to={"/userproject?author="+record.student_id}>查看</Link>
           <Divider type="vertical" />
             <a onClick={() => this.handleUpdateModalVisible(true, record)}>修改</a>
           <Divider type="vertical" />

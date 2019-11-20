@@ -11,7 +11,7 @@ export default () => {
   }, []);
   return (
 
-    <PageHeaderWrapper content="这是一个新页面，从这里进行开发！" className={styles.main}>
+    <PageHeaderWrapper content="欢迎使用 Pro Mange 项目管理系统" className={styles.main}>
 
       <div
         style={{
