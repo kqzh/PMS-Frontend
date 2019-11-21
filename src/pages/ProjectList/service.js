@@ -1,12 +1,12 @@
 import request from '@/utils/request';
 
 export async function queryFakeList(params) {
-  return request('server/api/projects', {
+  return request('/api/projects', {
     params,
   });
 }
 export async function deleteList(params) {
-  return request('server/api/projects/'+params.key, {
+  return request('/api/projects/'+params.key, {
     method: 'DELETE',
   });
 }

@@ -248,7 +248,6 @@ class TableList extends Component {
   };
   handleAddProject = fields => {
     const { dispatch } = this.props;
-    console.log(fields);
     dispatch({
       type: 'listTableList/addProject',
       payload: {
