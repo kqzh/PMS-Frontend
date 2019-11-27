@@ -119,8 +119,8 @@ class ProjectForm extends Component {
       },
     };
     const { list } = this.state;
-    const startDate = moment(list.StartTime);
-    const endDate = moment(list.EndTime);
+    const startDate = moment(list.startTime);
+    const endDate = moment(list.endTime);
     const uploadProps = {
       action:"/server/api/projects/upload",
       headers:{

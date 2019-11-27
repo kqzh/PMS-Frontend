@@ -241,8 +241,8 @@ class UserProject extends Component {
                   <CardInfo
                     projectStatus={item.status}
                     projectScore={numeral(item.score).format('0,0')}
-                    student_name={item.name}
-                    student_class = {item.class}
+                    student_name={item.student_name}
+                    student_class = {item.student_class}
                   />
                 </div>
               </Card>

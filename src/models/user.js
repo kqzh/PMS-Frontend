@@ -20,6 +20,7 @@ const UserModel = {
     *fetchCurrent(payload, { call, put }) {
       const response = yield call(queryCurrent,payload);
       if(response.status!=="ok"){
+        console.log(123);
         localStorage.removeItem("pro_token")
       }else{
         message.success("登录成功")

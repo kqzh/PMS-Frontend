@@ -1,25 +1,25 @@
 import request from '@/utils/request';
 
 export async function queryFakeList(params) {
-  return request('/api/stores', {
+  return request('/server/api/stores', {
     params,
   });
 }
 export async function queryProject() {
-  return request("/api/projects",{
+  return request("/server/api/projects",{
     method:'GET',
   })
 }
 export async function deleteStore(params){
-  return request('/api/stores', {
+  return request('/server/api/stores/'+params.pid+'/'+params.student_id, {
     method:'DELETE',
     params
   });
 }
 
 export async function scoreStore(params){
-  return request('/api/stores/score', {
+  return request('/server/api/stores/'+params.pid+'/'+params.student_id, {
     method:'PUT',
-    params
+    data:params
   });
 }

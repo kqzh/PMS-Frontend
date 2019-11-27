@@ -142,6 +142,7 @@ export default {
               path: '/setting',
               component: './setting',
               authority: ['admin'],
+              hideInMenu: true,
             },
             {
               name: '基础表单',
