@@ -132,7 +132,7 @@ class Setting extends Component {
               {this.getMenu()}
             </Menu>
           </div>
-          <div className={styles.right}>
+          <div className={styles.right} style={{paddingBottom:50}}>
             <div className={styles.title}>{this.getRightTitle()}</div>
             {this.renderChildren()}
           </div>

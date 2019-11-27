@@ -64,7 +64,7 @@ export default () => {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 1000);
+    }, 500);
   }, []);
   return (
 <Fragment>
@@ -73,9 +73,10 @@ export default () => {
       <div
         style={{
           textAlign: 'center',
+          // paddingBottom:10
         }}
       >
-        <Spin spinning={loading} size="large"></Spin>
+        {/*<Spin spinning={loading} size="small"/>*/}
       </div>
     </PageHeaderWrapper>
   <div >

@@ -11,7 +11,7 @@ const ProjectScore = props => {
       }
       form.resetFields();
       const value = {...fieldsValue,student_id:select.student_id,pid:select.pid};
-
+      value.score = parseInt(value.score);
       handleScore(value);
       handleScoreModalVisible(scoreVisible);
 

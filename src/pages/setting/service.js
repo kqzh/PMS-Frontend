@@ -13,7 +13,7 @@ export async function query() {
   return request('/api/users');
 }
 export async function updateUser(params) {
-  return request('server/api/currentUser', {
+  return request('/server/api/currentUser', {
     method: 'PUT',
     data: { ...params},
   });

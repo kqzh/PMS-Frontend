@@ -108,8 +108,7 @@ class BaseView extends Component {
     this.view = ref;
   };
   handleUpdate = fields => {
-    const { dispatch ,currentUser} = this.props;
-    console.log(currentUser);
+    const { dispatch ,currentUser} = this.props;  
     const values = {...fields,key:currentUser.key,username:currentUser.username};
     dispatch({
       type: 'setting/update',

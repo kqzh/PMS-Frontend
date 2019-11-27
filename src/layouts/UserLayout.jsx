@@ -47,7 +47,7 @@ const UserLayout = props => {
                 <span className={styles.title}>Pro Manage</span>
               </Link>
             </div>
-            <div className={styles.desc}>Pro Manage 是杭师大最好的课程项目申请平台.</div>
+            <div className={styles.desc}>Pro Manage 是杭师大 No.2 的课程项目申请平台.</div>
           </div>
           {children}
         </div>
