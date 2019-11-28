@@ -82,6 +82,7 @@ class UserProject extends Component {
       handleScore :this.handleScore,
       handleScoreModalVisible: this.handleScoreModalVisible,
     };
+    const myStatus=["未申请","已申请","第一周","第二周","已提交"];
     const CardInfo = ({ projectStatus, projectScore,student_name,student_class}) => (
 
       <div className={styles.cardInfo} >
@@ -92,7 +93,7 @@ class UserProject extends Component {
 
         <div style={{textAlign:"center",marginBottom:"5px"}}>
           <p>完成进度</p>
-          <p>{projectStatus}</p>
+          <p style={{fontSize:14}}>{myStatus[projectStatus]}</p>
         </div>
         <div style={{textAlign:"center"}}>
           <p >{"学生班级"}</p>
@@ -226,7 +227,7 @@ class UserProject extends Component {
                   <Tooltip key="edit" title="评分" onClick={()=>this.handleScoreModalVisible(this.state.scoreVisible,item.student_id,item.pid)}>
                     <Icon type="edit" />
                   </Tooltip>,
-                  <Link to = "userproject/detail?pid=123&student_id=456"><Tooltip key="calendar" title="查看进度">
+                  <Link to ={ "userproject/detail?pid="+item.pid+"&student_id="+item.student_id}><Tooltip key="calendar" title="查看进度">
                     <Icon type="calendar" />
                   </Tooltip></Link>,
 

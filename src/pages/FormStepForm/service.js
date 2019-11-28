@@ -1,8 +1,11 @@
 import request from '@/utils/request';
 
-export async function fakeSubmitForm(params) {
-  return request('/api/forms', {
-    method: 'POST',
-    data: params,
+export async function getStepForm(params) {
+  return request('/server/api/userStepForms/'+params.pid+'/'+params.student_id, {
+  });
+}
+
+export async function getUserStore(params) {
+  return request('/server/api/stores/'+params.pid+'/'+params.student_id, {
   });
 }

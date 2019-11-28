@@ -14,7 +14,6 @@ const { Step } = Steps;
 class FormStepForm extends Component {
   getCurrentStep() {
     const { current } = this.props;
-
     switch (current) {
       case 'info':
         return 0;
@@ -29,13 +28,21 @@ class FormStepForm extends Component {
         return 0;
     }
   }
+componentDidMount() {
+  const { dispatch ,location} = this.props;
+
+  dispatch({
+    type: 'formStepForm/fetch',
+    payload: {
+      ...location.query
+    },
+  });
+}
 
   render() {
     const currentStep = this.getCurrentStep();
     let stepComponent;
-
     if (currentStep === 1) {
-      console.log(123);
       stepComponent = <Step2 />;
     } else if (currentStep === 2) {
       stepComponent = <Step3 />;

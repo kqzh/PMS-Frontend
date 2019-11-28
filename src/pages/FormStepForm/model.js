@@ -1,37 +1,43 @@
-import { fakeSubmitForm } from './service';
+import { fakeSubmitForm, getStepForm, getUserStore } from './service';
 
 const Model = {
   namespace: 'formStepForm',
   state: {
     current: 'info',
-    step: {
-      payAccount: 'ant-design@alipay.com',
-      receiverAccount: 'test@example.com',
-      receiverName: 'Alex',
-      amount: '500',
-    },
+    stepList: [],
+    myStore:[],
   },
   effects: {
-    *submitStepForm({ payload }, { call, put }) {
-      yield call(fakeSubmitForm, payload);
+    *fetch({ payload }, { call, put }) {
+      const res = yield call(getStepForm, payload);
       yield put({
         type: 'saveStepFormData',
-        payload,
+        payload:res,
       });
+
+      const msg = yield  call(getUserStore,payload);
+      yield put({
+        type: 'saveMyStore',
+        payload:msg,
+      });
+
       yield put({
         type: 'saveCurrentStep',
-        payload: 'result',
+        payload: 'info',
       });
     },
   },
   reducers: {
     saveCurrentStep(state, { payload }) {
-      console.log(payload);
       return { ...state, current: payload };
     },
 
     saveStepFormData(state, { payload }) {
-      return { ...state, step: { ...state.step, ...payload } };
+      return { ...state, stepList:payload};
+    },
+
+    saveMyStore(state, { payload }) {
+      return { ...state, myStore:payload};
     },
   },
 };

@@ -34,7 +34,7 @@ const getValue = obj =>
     .join(',');
 
 const statusMap = ['default', 'processing', 'success', 'error'];
-const status = ['关闭', '运行中', '已上线', '异常'];
+const status = ['关闭', '运行中', '正常', '异常'];
 
 /* eslint react/no-multi-comp:0 */
 @connect(({ listTableList, loading }) => ({
@@ -73,27 +73,28 @@ class TableList extends Component {
     {
       title: '账号状态',
       dataIndex: 'student_status',
-      filters: [
-        {
-          text: status[0],
-          value: '0',
-        },
-        {
-          text: status[1],
-          value: '1',
-        },
-        {
-          text: status[2],
-          value: '2',
-        },
-        {
-          text: status[3],
-          value: '3',
-        },
-      ],
+      initialValue:0,
+      // filters: [
+      //   {
+      //     text: status[0],
+      //     value: '0',
+      //   },
+      //   {
+      //     text: status[1],
+      //     value: '1',
+      //   },
+      //   {
+      //     text: status[2],
+      //     value: '2',
+      //   },
+      //   {
+      //     text: status[3],
+      //     value: '3',
+      //   },
+      // ],
 
       render(val) {
-        return <Badge status={statusMap[val]} text={status[val]} />;
+        return <Badge status={statusMap[2]} text={status[2]} />;
       },
     },
     {

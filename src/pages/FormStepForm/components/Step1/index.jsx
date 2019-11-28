@@ -13,9 +13,8 @@ const formItemLayout = {
 };
 
 const Step1 = props => {
-  const { form, dispatch, data } = props;
-
-  if (!data) {
+  const { form, dispatch, data,desc } = props;
+  if (!data&&!desc) {
     return null;
   }
 
@@ -25,32 +24,26 @@ const Step1 = props => {
     validateFields((err, values) => {
       if (!err && dispatch) {
         dispatch({
-          type: 'formStepForm/saveStepFormData',
-          payload: values,
-        });
-        dispatch({
           type: 'formStepForm/saveCurrentStep',
           payload: 'confirm',
         });
       }
     });
   };
-
   return (
     <Form layout="horizontal" className={styles.stepForm}>
       <Alert
         closable
         showIcon
-        message="查看学生第一次申请项目的内容"
+        message="查看学生申请项目的内容"
         style={{
           marginBottom: 24,
         }}
       />
       <Descriptions column={1}>
-        <Descriptions.Item label="项目名称"> 图书馆后台管理系统</Descriptions.Item>
-        <Descriptions.Item label="学生学号">2017212212088</Descriptions.Item>
-        <Descriptions.Item label="学生名称"> 刘鑫超</Descriptions.Item>
-        <Descriptions.Item label="项目描述">一个复杂的后台管理系统</Descriptions.Item>
+        <Descriptions.Item label="学生学号">{data.student_id}</Descriptions.Item>
+        <Descriptions.Item label="项目名称"> {data.title}</Descriptions.Item>
+        <Descriptions.Item label="项目描述">{data.description}</Descriptions.Item>
       </Descriptions>
       <Divider
         style={{
@@ -59,11 +52,11 @@ const Step1 = props => {
       />
       <Form.Item {...formItemLayout} label="Github地址" required={false}>
         {getFieldDecorator('password', {
-          initialValue: 'https://github.com/kqzh/PMS-Backend',
+          initialValue: desc.address1,
           rules: [
             {
               required: true,
-              message: '需要支付密码才能进行支付',
+              message: '学生还未申请项目',
             },
           ],
         })(
@@ -102,5 +95,6 @@ const Step1 = props => {
 };
 
 export default connect(({ formStepForm }) => ({
-  data: formStepForm.step,
+  data: formStepForm.myStore,
+  desc: formStepForm.stepList
 }))(Form.create()(Step1));
