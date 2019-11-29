@@ -3,7 +3,7 @@ export async function query() {
   return request('/api/users');
 }
 export async function queryCurrent(params) {
-  return request('/server/api/currentUser', {
+  return request('/api/currentUser', {
     params,
   });
 }

@@ -97,7 +97,7 @@ class TableList extends Component {
         return <Badge status={statusMap[2]} text={status[2]} />;
       },
     },
-    {
+    { 
       title: '创建时间',
       dataIndex: 'updatedAt',
       sorter: true,

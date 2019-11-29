@@ -215,9 +215,9 @@ export default {
   manifest: {
     basePath: '/',
   },
-  base:'/public',
-  outputPath:"./dist/ public",
-  publicPath:'/public/',
+  // base:'/public',
+  // outputPath:"./dist/ public",
+  // publicPath:'/public/',
   chainWebpack: webpackPlugin,
   //设置代理
   proxy: {
