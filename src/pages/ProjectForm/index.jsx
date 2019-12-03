@@ -122,7 +122,7 @@ class ProjectForm extends Component {
     const startDate = moment(list.startTime);
     const endDate = moment(list.endTime);
     const uploadProps = {
-      action:"/server/api/projects/upload",
+      action:"/api/projects/upload",
       headers:{
         authorization:localStorage.getItem("pro_token")
       }
